@@ -7,12 +7,29 @@ name: Publish web companion
 # storage is per-origin and does not follow a domain change. See
 # docs/HOSTING-GITHUB-PAGES-2026-10-14.md.
 #
-# Two jobs, answering two questions:
+# Three jobs, answering three questions:
 #
-#   build   — is this publishable? The suite, the rendered-browser accessibility
-#             harness, and the artifact validator. Nothing here is conditional,
-#             so the gate cannot be skipped by choosing to publish.
-#   deploy  — publish it. Needs build, so a failed check cannot reach the site.
+#   checks   — is this good? The suite, the rendered-browser accessibility
+#              harness, and the artifact validator. Nothing here is conditional,
+#              so the gate cannot be skipped by choosing to publish.
+#   package  — could this be published? Needs checks. This is where Pages is
+#              configured and the artifact uploaded.
+#   deploy   — publish it. Needs package, so a failed check cannot reach a site.
+#
+# `package` is expected to FAIL until GitHub Pages is enabled on this
+# repository, which the organization's free plan does not allow while the
+# repository is private:
+#
+#   Get Pages site failed ... HttpError: Not Found
+#   POST /repos/.../pages -> 422 Your current plan does not support GitHub
+#   Pages for this repository.
+#
+# That failure is deliberately isolated into its own job so the quality signal
+# stays honest. The checks job going green means the companion is sound; the
+# package job going red means exactly one thing, and it clears by itself once
+# the plan blocker is resolved — no flag to set and nothing to remember, so a
+# push cannot silently stop deploying. See
+# docs/HOSTING-GITHUB-PAGES-2026-10-14.md.
 
 on:
   push:
@@ -29,7 +46,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -56,13 +73,28 @@ jobs:
       - name: Validate the artifact that would be published
         run: npm run validate:artifact
 
+  package:
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Re-run the artifact validator here rather than trusting the previous
+      # job: this is the job that actually hands bytes to Pages, and the CNAME
+      # check is the one that keeps the site at the intended address.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate the artifact being uploaded
+        run: npm run validate:artifact
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
-    needs: build
+    needs: package
     runs-on: ubuntu-latest
     environment:
       name: github-pages

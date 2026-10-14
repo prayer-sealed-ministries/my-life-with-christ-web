@@ -6,7 +6,7 @@ and the preparatory plan in [the hosting transition](HOSTING-TRANSITION.md).
 Those remain accurate records of what was true before today and are kept as
 history, not as instructions.
 
-**Status: prepared and verified locally; publication is BLOCKED on the GitHub
+**Status: prepared and verified in CI; publication is BLOCKED on the GitHub
 plan.** Nothing has been deployed to GitHub Pages, and the permanent address
 does not serve the companion yet. The existing site is untouched and still live.
 
@@ -24,12 +24,28 @@ GitHub redirects the old name.
 
 ## The blocker
 
-GitHub Pages cannot be enabled on this repository as it stands:
+GitHub Pages cannot be enabled on this repository as it stands. Refused by the
+API directly:
 
 ```
 POST /repos/prayer-sealed-ministries/my-life-with-christ-web/pages
 422 Your current plan does not support GitHub Pages for this repository.
 ```
+
+and again inside the workflow, on run
+[38562261022](https://github.com/prayer-sealed-ministries/my-life-with-christ-web/actions/runs/38562261022):
+
+```
+Run actions/configure-pages@v5
+Get Pages site failed. Please verify that the repository has Pages enabled and
+configured to build using GitHub Actions ...
+HttpError: Not Found
+```
+
+Every check in that same run passed first — 84 tests, the rendered-browser
+harness on Linux Chromium, and the artifact validator — so the failure is the
+plan and nothing else. The workflow now isolates it in its own `package` job so
+a blocked publication cannot be mistaken for a broken companion.
 
 The `prayer-sealed-ministries` organization is on the **free** plan, and this
 repository is **private**. GitHub Pages is available for private repositories
