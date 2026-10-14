@@ -1,5 +1,7 @@
 # GitHub source handoff — 2026-10-14
 
+> **Historical record.** This describes the repository as it stood on 14 October 2026, when the companion was served from OpenAI Sites and this repository was named `my-life-with-christ-web.` (with a trailing period). The repository has since been renamed to `my-life-with-christ-web` — repository ID `1418079428` is unchanged — and the intended host is now GitHub Pages. The deployment, version and hash identifiers below remain accurate for the Sites deployment they describe, which is still live. Current hosting instruction: [HOSTING-GITHUB-PAGES-2026-10-14.md](HOSTING-GITHUB-PAGES-2026-10-14.md).
+
 This is the existing private repository `prayer-sealed-ministries/my-life-with-christ-web.` (repository ID **1418079428**). Its trailing period is part of its current name. The repository was empty before the authorized source handoff; its name, visibility and permissions were not changed.
 
 ## Source identity and fidelity

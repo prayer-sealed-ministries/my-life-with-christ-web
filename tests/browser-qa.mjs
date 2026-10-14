@@ -13,7 +13,18 @@ assert.equal((await fetch(base)).status,200);await mkdir('.test-tmp/browser',{re
 let browser;
 const results=[];
 try{
- browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
+ // Default to the Chromium Playwright installed for this package rather than a
+ // hardcoded /usr/bin/chromium. That path is why this harness had never run: it
+ // is absent on macOS and on a GitHub runner, and the one environment that did
+ // provide it denied the launch outright ("Operation not permitted" on a
+ // required Unix socket). CHROMIUM_PATH still overrides for a system browser.
+ try{
+  browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||undefined,headless:true,args:['--no-sandbox']});
+ }catch(cause){
+  // Rethrown, never swallowed. An unavailable browser must fail this harness
+  // loudly; a quiet exit would let "no rendered check ran" read as a pass.
+  throw new Error(`Could not launch Chromium for the rendered-browser harness. Install it with \`npx playwright install chromium\`, or set CHROMIUM_PATH to an executable. Underlying failure: ${cause.message}`,{cause});
+ }
  const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true});const page=await context.newPage();const errors=[],requests=[];
  page.on('pageerror',err=>errors.push(err.message));page.on('request',req=>requests.push(req.url()));
  await page.goto(base);await page.evaluate(()=>window.lwcReady);

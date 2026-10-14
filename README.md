@@ -36,11 +36,13 @@ Tests use Node 24, Python 3, jsdom, and fake-indexeddb. The DOM tests are not re
 
 All public assets are relative paths, suitable for a domain root or a GitHub Pages project subpath. There are no ChatGPT runtime APIs or sign-in dependencies in the application.
 
-A future move to a user-chosen GitHub repository is intended. Preserve this Git history, tests, guides and static assets when choosing that repository; no particular organization or repository has been created or selected by this work. `dist/` can be hosted on GitHub Pages or another static host under a ministry-controlled domain.
+**Intended host: GitHub Pages, at `https://journal.prayersealed.org/`.** [The Pages workflow](.github/workflows/pages.yml) runs the suite, the rendered-browser harness and the artifact validator, then publishes `dist/` on every push to `main` and on manual dispatch. `dist/CNAME` pins the domain, and `npm run validate:artifact` refuses an artifact whose CNAME is missing or wrong.
 
-The optional GitHub Pages workflow is manual. On GitHub, enable Pages with GitHub Actions as the source, then run the workflow. Public repositories can use GitHub Free Pages; private-repository availability depends on the GitHub plan. No permanent domain is assumed or configured.
+**That move is not finished.** Pages cannot be enabled while this repository is private on the organization's free plan — the API refuses with "Your current plan does not support GitHub Pages for this repository" — so there is no deployment, certificate or HTTPS at the new address yet. [docs/HOSTING-GITHUB-PAGES-2026-10-14.md](docs/HOSTING-GITHUB-PAGES-2026-10-14.md) is the current hosting instruction; it records the blocker, the exact GoDaddy record to change, and the order of operations.
 
-When changing origins, existing IndexedDB data does not move automatically. Ask readers to download their journal from the old site and import it at the new one before closing the old site. Domain choices should be settled before a broad launch.
+**The existing site stays up:** <https://my-life-with-christ.systemslibrarian.chatgpt.site/>, served from an OpenAI Sites project. It is not redirected, disabled or retired, and its browser storage is untouched. A GitHub deployment does not update it.
+
+When changing origins, existing IndexedDB data does not move automatically. Browser storage is per-origin, and a CNAME, custom domain or redirect does not carry it: a reader at the new address sees an empty journal until they import a file. Readers download a full backup at the old site and import it at the new one, keeping the old site available meanwhile. The procedure is in the hosting document above, and [tests/migration.test.mjs](tests/migration.test.mjs) checks it against a genuinely separate database — empty destination, destination that already holds writing, repeated import, changed-version conflict, malformed input, protected `.lwc` round trip, and opaque metadata.
 
 ## Limits stated in the product
 
@@ -63,8 +65,16 @@ See `docs/IMPLEMENTATION-2026-10-13.md` for current evidence, `docs/manual-accep
 
 Code: MIT, copyright Paul Clark. QR generator: MIT, copyright Kazuhiko Arase (notice retained in the vendored file).
 
-## Optional rendered-browser QA
+## Rendered-browser QA
 
-`tests/browser-qa.mjs` starts an isolated loopback-only static preview and uses installed Playwright + `@axe-core/playwright`, plus an installed Chromium. It does not contact the public deployment. Run with `node tests/browser-qa.mjs` when those packages are installed here, or point `LWC_QA_PACKAGE_ROOT` at an existing package root that provides them. `CHROMIUM_PATH` can override `/usr/bin/chromium`. Test artifacts are fictional and written under ignored `.test-tmp/browser/`.
+```sh
+npm run test:browser
+```
 
-The October 13 environment could not launch Chromium because its required Unix socket was denied (`Operation not permitted`), including an approved escalation retry. The supported cloud browser was also checked, but could not reach the retained preview server (`ERR_CONNECTION_REFUSED`); no cross-environment forwarding route was available. The harness is prepared but not verified; no rendered browser, axe, screenshot, or hardware result is claimed from it. Node/jsdom tests remain separate evidence.
+`tests/browser-qa.mjs` starts an isolated loopback-only static preview and drives it with Playwright + `@axe-core/playwright`, both now pinned devDependencies, so the harness no longer depends on packages borrowed from elsewhere. It does not contact the public deployment. `CHROMIUM_PATH` overrides the browser; by default it uses the Chromium Playwright installs for this package (`npx playwright install chromium`). Test artifacts are fictional and written under ignored `.test-tmp/browser/`. The Pages workflow runs this on every push, so it cannot quietly go unverified again.
+
+**First verified on 14 October 2026: 10 consecutive passes, Chromium 153.0.8010.12, zero axe violations across all nine routes**, plus reflow at 1280/390/320 CSS px, dialog Escape/focus restoration, the import and protected-unlock flows, no page errors and no external runtime requests. Evidence: [docs/evidence/browser-qa-2026-10-14.json](docs/evidence/browser-qa-2026-10-14.json).
+
+The earlier blocker is resolved, and the cause was infrastructure rather than the application or the harness logic. The October 13 environment could not launch Chromium because its required Unix socket was denied (`Operation not permitted`), and the cloud browser could not reach the retained preview server (`ERR_CONNECTION_REFUSED`). On top of that the harness launched a hardcoded `/usr/bin/chromium`, which exists on neither macOS nor a GitHub runner; it now defaults to Playwright's own Chromium and rethrows an actionable error if no browser can start, so an unavailable browser fails loudly instead of reading as a pass.
+
+This is a headless-Chromium axe result, not a conformance claim. Firefox, Safari/WebKit, real screen readers, physical devices, printed QR, OS high-contrast and reduced-motion checks remain open — see [docs/manual-acceptance.md](docs/manual-acceptance.md) and [docs/ACCESSIBILITY-ASSESSMENT.md](docs/ACCESSIBILITY-ASSESSMENT.md). Node/jsdom tests remain separate evidence.

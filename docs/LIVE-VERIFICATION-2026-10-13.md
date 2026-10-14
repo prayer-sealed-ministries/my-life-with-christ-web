@@ -1,5 +1,7 @@
 # Published companion browser smoke verification — 2026-10-13
 
+> **Historical record.** This verifies version 3 of the OpenAI Sites deployment, which is still the live site. It is not a record of the GitHub Pages move, which has not been deployed. Current hosting instruction: [HOSTING-GITHUB-PAGES-2026-10-14.md](HOSTING-GITHUB-PAGES-2026-10-14.md).
+
 ## Final version 3 verification
 
 Version **3** is the current successful public deployment at the same address. Sites status was checked again on October 13 at **23:09 UTC**; it reported `succeeded`, no failure, and the unchanged public URL and audience.

@@ -1,0 +1,94 @@
+{
+  "recordedAt": "2026-10-14",
+  "what": "First successful execution of tests/browser-qa.mjs, the rendered-browser accessibility and reflow harness.",
+  "priorStatus": "Prepared but never run. The 13 October environment could not launch Chromium (\"Operation not permitted\" on a required Unix socket) and the cloud browser could not reach a loopback preview (ERR_CONNECTION_REFUSED).",
+  "causeClassification": "Browser/runtime infrastructure, not application behaviour and not harness logic.",
+  "rootCause": "The harness launched chromium with a hardcoded executablePath of /usr/bin/chromium, which is absent on macOS and on a GitHub runner; the one environment that did provide it denied the launch. It now defaults to the Chromium Playwright installs for this package, with CHROMIUM_PATH as an override, and rethrows an actionable error rather than exiting quietly.",
+  "environment": {
+    "os": "darwin arm64",
+    "node": "v26.9.0",
+    "chromium": "153.0.8010.12",
+    "axeTags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ]
+  },
+  "checks": [
+    "nine routes axe WCAG tags",
+    "pastor preview/download",
+    "provided-notes import",
+    "autosave/reload",
+    "readable privacy defaults",
+    "browser journal download",
+    "protected fixture unlock",
+    "repeat import receipt",
+    "five routes at 1280/390/320px reflow",
+    "dialog Escape/focus restoration",
+    "no page errors",
+    "no external runtime requests"
+  ],
+  "routesScanned": [
+    "home",
+    "journal",
+    "transfer",
+    "import",
+    "church",
+    "privacy",
+    "guide",
+    "format",
+    "write/sermon"
+  ],
+  "axeViolationsTotal": 0,
+  "perRoute": [
+    {
+      "route": "home",
+      "violations": 0
+    },
+    {
+      "route": "journal",
+      "violations": 0
+    },
+    {
+      "route": "transfer",
+      "violations": 0
+    },
+    {
+      "route": "import",
+      "violations": 0
+    },
+    {
+      "route": "church",
+      "violations": 0
+    },
+    {
+      "route": "privacy",
+      "violations": 0
+    },
+    {
+      "route": "guide",
+      "violations": 0
+    },
+    {
+      "route": "format",
+      "violations": 0
+    },
+    {
+      "route": "write/sermon",
+      "violations": 0
+    }
+  ],
+  "repeatRuns": {
+    "attempted": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "adversarialCheck": "CHROMIUM_PATH=/nonexistent/chromium exits 1 with an actionable message, so an unavailable browser cannot read as a pass.",
+  "limits": [
+    "Headless Chromium only. No Firefox, no Safari/WebKit.",
+    "axe-core covers the machine-decidable subset of WCAG; it is not a conformance result.",
+    "No screen reader, no physical device, no printed QR, no OS high-contrast or reduced-motion verification.",
+    "Run against the local dist/ over loopback, never against a public deployment."
+  ]
+}

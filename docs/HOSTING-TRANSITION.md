@@ -1,5 +1,7 @@
 # Hosting, origin transition, and offline assessment
 
+> **Historical and preparatory.** Written before a host was chosen. The host has since been decided: GitHub Pages at `https://journal.prayersealed.org/`. The origin-move cautions below still apply in full and are the basis of the current procedure; the "proposed only" status of that address, and the generic static-host steps, are superseded by [HOSTING-GITHUB-PAGES-2026-10-14.md](HOSTING-GITHUB-PAGES-2026-10-14.md).
+
 ## Portable build and release preparation
 
 The authoritative existing Sites source remains the source of this review branch. Serve the complete `dist/` directory as a static HTTPS site; there is no build step, runtime API, account, backend, remote font, or ChatGPT-specific browser dependency. Paths are relative so root or project-subpath hosting is possible. Keep the supplied Content Security Policy; scripts, modules, styles, downloaded guides, and the vendored QR generator must all resolve under the same deployment path.

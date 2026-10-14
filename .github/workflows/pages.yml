@@ -1,19 +1,36 @@
 name: Publish web companion
+
+# Hosting, as of 14 October 2026: GitHub Pages at https://journal.prayersealed.org/
+#
+# The companion was previously served from an OpenAI Sites project. That origin
+# is deliberately kept alive so readers can export journals from it — browser
+# storage is per-origin and does not follow a domain change. See
+# docs/HOSTING-GITHUB-PAGES-2026-10-14.md.
+#
+# Two jobs, answering two questions:
+#
+#   build   — is this publishable? The suite, the rendered-browser accessibility
+#             harness, and the artifact validator. Nothing here is conditional,
+#             so the gate cannot be skipped by choosing to publish.
+#   deploy  — publish it. Needs build, so a failed check cannot reach the site.
+
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: false
+
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,11 +38,36 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm test
+
+      - name: Test suite
+        run: npm test
+
+      # The rendered-browser accessibility and reflow harness. This was prepared
+      # but had never run: the October 13 environment could not launch Chromium
+      # (a required Unix socket was denied) and the cloud browser could not reach
+      # a loopback preview. Running it here is what stops "prepared" being
+      # mistaken for "verified" again.
+      - name: Install Chromium for the browser harness
+        run: npx playwright install --with-deps chromium
+
+      - name: Rendered-browser accessibility and reflow harness
+        run: npm run test:browser
+
+      - name: Validate the artifact that would be published
+        run: npm run validate:artifact
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

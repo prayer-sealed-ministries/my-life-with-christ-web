@@ -1,5 +1,7 @@
 # Companion accessibility assessment
 
+> **Update, 14 October 2026.** The "Browser verification blocker" recorded below is resolved. `tests/browser-qa.mjs` has now run: 10 consecutive passes on Chromium 153.0.8010.12 with zero axe violations across nine routes, and it runs in CI on every push. Evidence: [evidence/browser-qa-2026-10-14.json](evidence/browser-qa-2026-10-14.json). The source/jsdom findings and the pending screen-reader, physical-device and other-browser rows below stand unchanged — a headless Chromium axe pass is not a conformance result.
+
 Date: 13 October 2026. Scope: the browser-local companion on `improve/companion-integrity-transfer`, starting from `454bf37`, including the current companion implementation changes. The public deployment was not tested or changed.
 
 **Result: 13 focused source/jsdom checks pass. Rendered-browser, keyboard-device, and assistive-technology checks remain pending. This is not a WCAG 2.2 AA conformance claim.**
