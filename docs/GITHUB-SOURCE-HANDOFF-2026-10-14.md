@@ -10,6 +10,8 @@ The supported GitHub connector creates new handoff commits. It does not preserve
 
 Bundle SHA-256: `eee6a2a3864b351ac3c49fb699266263d6d1aa6b6621e58a71d4c4f09ff6929d`.
 
+The supported binary-file readback returned the exact validated bundle bytes. A fresh local clone of those identical bytes, followed by a full Git object check, recovered all 16 commits with the exact HEAD and tree.
+
 The complete original file paths, modes, Git blob hashes and SHA-256 hashes are recorded in [the handoff manifest](evidence/github-source-handoff-2026-10-14.json). The source README's future-GitHub statements are historical as of the preserved snapshot; this handoff record is the current repository status.
 
 ## Recover original source history
@@ -18,7 +20,7 @@ After cloning or downloading this repository, run:
 
 ```sh
 git bundle verify recovery/companion-source-history.bundle
-git clone recovery/companion-source-history.bundle recovered-companion
+git clone --branch main recovery/companion-source-history.bundle recovered-companion
 git -C recovered-companion rev-parse HEAD
 git -C recovered-companion rev-parse 'HEAD^{tree}'
 ```
@@ -26,7 +28,7 @@ git -C recovered-companion rev-parse 'HEAD^{tree}'
 Expected HEAD: `cb065aead634686566dc1a0b43fc428d9e6050c2`.
 Expected tree: `285a56331665b52535099b00daf8923c884b11df`.
 
-This recovers the original history into a separate directory. It does not replace GitHub history, configure a remote, change the live site or move browser journals. Avoid force-pushing or deleting either copy as a migration shortcut.
+The explicit `--branch main` is required because this bundle records the main ref without a separate HEAD ref. This command was verified by a fresh local bundle clone, a full Git object check, and exact HEAD/tree comparison. It recovers the original history into a separate directory. It does not replace GitHub history, configure a remote, change the live site or move browser journals. Avoid force-pushing or deleting either copy as a migration shortcut.
 
 ## Existing deployment remains authoritative
 

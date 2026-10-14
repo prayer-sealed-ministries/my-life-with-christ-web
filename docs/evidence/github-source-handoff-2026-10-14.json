@@ -374,7 +374,10 @@
     "sha256": "eee6a2a3864b351ac3c49fb699266263d6d1aa6b6621e58a71d4c4f09ff6929d",
     "git_blob_sha": "ea4c17ba8485d6dfb4dbbd082d51c57227b4647c",
     "bytes": 171261,
-    "verification": "git bundle verify passed; complete history, main ref at source commit"
+    "verification": "git bundle verify passed; complete history, main ref at source commit",
+    "remote_binary_readback": "Supported GitHub fetch_file with base64 encoding returned bytes exactly equal to the locally validated bundle.",
+    "restore_verification": "git clone --branch main plus git fsck --full --no-reflogs passed; exact source HEAD, tree, and 16-commit count recovered.",
+    "restore_command": "git clone --branch main recovery/companion-source-history.bundle recovered-companion"
   },
   "fidelity_boundary": "GitHub connector-created commits contain an exact original file snapshot plus additive handoff artifacts. Original commit identities, authors, timestamps and full history are retained exactly inside the Git bundle, not recreated as native GitHub commits.",
   "existing_deployment": {
