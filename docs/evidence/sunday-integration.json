@@ -1,0 +1,295 @@
+{
+  "scenario": "Independent fictional Sunday: actual companion modules and actual app source",
+  "startedAt": "2026-10-13T22:07:24.259Z",
+  "identities": {
+    "app": {
+      "commit": "c9b5353e59dbdc8302ce08b1f40e8727756f60cf",
+      "status": "M docs/IMPLEMENTATION-2026-10-13.md\n M docs/PROTECTED-TRANSFER-FORMAT.md\n M src/views/DataView.protected-transfer.test.tsx\n M src/views/DataView.tsx\n M src/views/EntryEditor.tsx\n?? src/views/EntryEditor.opaque-recovery.test.tsx",
+      "productionTreeHash": "7790ea3f7bf9fe65911777d242d845113e03d89578dce87cc969fd778dc58894",
+      "examinedFiles": 109,
+      "examinedFolders": [
+        "src/storage",
+        "src/export",
+        "src/lib",
+        "src/types",
+        "src/import"
+      ]
+    },
+    "companion": {
+      "commit": "ba387031f57e09d013f83aa04d5abc7a3851d76c",
+      "status": "",
+      "productionTreeHash": "e406b4bce22025d189f5b55e92dfd4d058e11e23a09994a79e8da9607f8ab313",
+      "examinedFiles": 11,
+      "examinedFolders": [
+        "dist"
+      ]
+    }
+  },
+  "boundaries": [
+    "Companion controls run in simulated JSDOM, not a rendered browser or accessibility assessment.",
+    "IndexedDB uses fake-indexeddb; close/reopen verifies logical persistence, not browser or physical disk durability.",
+    "App TypeScript runs from current source via transpilation; its Vite Bible glob is expanded to the actual local JSON files.",
+    "Browser download offers are captured Blobs. No actual Downloads write, public host, QR camera scan, phone import, SQLite, or native file picker is established.",
+    "All data is newly created fictional test data. No real journal or deployment is accessed."
+  ],
+  "stages": [
+    {
+      "name": "01 Actual source and simulated-DOM initialization",
+      "evidenceType": "source identity + simulated DOM",
+      "status": "passed",
+      "ms": 101,
+      "detail": {
+        "app": {
+          "commit": "c9b5353e59dbdc8302ce08b1f40e8727756f60cf",
+          "status": "M docs/IMPLEMENTATION-2026-10-13.md\n M docs/PROTECTED-TRANSFER-FORMAT.md\n M src/views/DataView.protected-transfer.test.tsx\n M src/views/DataView.tsx\n M src/views/EntryEditor.tsx\n?? src/views/EntryEditor.opaque-recovery.test.tsx",
+          "productionTreeHash": "7790ea3f7bf9fe65911777d242d845113e03d89578dce87cc969fd778dc58894",
+          "examinedFiles": 109,
+          "examinedFolders": [
+            "src/storage",
+            "src/export",
+            "src/lib",
+            "src/types",
+            "src/import"
+          ]
+        },
+        "companion": {
+          "commit": "ba387031f57e09d013f83aa04d5abc7a3851d76c",
+          "status": "",
+          "productionTreeHash": "e406b4bce22025d189f5b55e92dfd4d058e11e23a09994a79e8da9607f8ab313",
+          "examinedFiles": 11,
+          "examinedFolders": [
+            "dist"
+          ]
+        }
+      }
+    },
+    {
+      "name": "02 Pastor validation, recipient preview and actual offered Sermon Pack",
+      "evidenceType": "simulated DOM + actual companion validator",
+      "status": "passed",
+      "ms": 49,
+      "detail": {
+        "filename": "fictional-sunday-a-shared-table.sermon-notes.json",
+        "packBytes": 416,
+        "unsafeMarkupRemainsText": true
+      }
+    },
+    {
+      "name": "03 Public-link QR generation without publishing or fetching",
+      "evidenceType": "simulated DOM + validation only",
+      "status": "passed",
+      "ms": 14,
+      "detail": {
+        "generatedLocally": true,
+        "URLVerified": false,
+        "physicalScan": false
+      }
+    },
+    {
+      "name": "04 Recipient review requires confirmation and keeps provided/private fields separate",
+      "evidenceType": "simulated DOM + actual companion IndexedDB calls",
+      "status": "passed",
+      "ms": 40,
+      "detail": {
+        "entriesBeforeConfirmation": 0,
+        "draftsAfterConfirmation": 1,
+        "sourceDigestMatchesReceivedBytes": true
+      }
+    },
+    {
+      "name": "05 Personal writing survives autosave, navigation and save; unfinished work stays distinct",
+      "evidenceType": "simulated DOM + actual companion storage",
+      "status": "passed",
+      "ms": 66,
+      "detail": {
+        "savedEntries": 1,
+        "unfinishedDrafts": 1,
+        "exactTrailingWhitespacePreserved": true
+      }
+    },
+    {
+      "name": "06 Enrich fictional metadata, anchors and links; dashboard/search remain usable",
+      "evidenceType": "programmatic fixture enrichment + simulated DOM",
+      "status": "passed",
+      "ms": 29,
+      "detail": {
+        "enrichedFields": [
+          "entry",
+          "draft",
+          "form",
+          "anchor",
+          "link",
+          "provided material",
+          "envelope"
+        ],
+        "searchMatchCount": 1
+      }
+    },
+    {
+      "name": "07 Readable sharing excludes private fields by default and obeys selected inclusion",
+      "evidenceType": "simulated DOM + captured actual Markdown offer",
+      "status": "passed",
+      "ms": 16,
+      "detail": {
+        "notes": true,
+        "provided": true,
+        "reflectionAfterOptIn": true,
+        "prayer": false,
+        "unfinishedDrafts": false
+      }
+    },
+    {
+      "name": "08 Actual companion plain/protected offers include selected saved writing and separate drafts",
+      "evidenceType": "simulated DOM + actual encryption",
+      "status": "passed",
+      "ms": 208,
+      "detail": {
+        "savedEntries": 1,
+        "unfinishedDrafts": 1,
+        "partialOpaqueMetadataOmitted": true,
+        "fullPrivateFieldsInTransfer": true,
+        "physicalFileSaved": false
+      }
+    },
+    {
+      "name": "09 Companion connection close/reopen retains all logical records; no network occurred",
+      "evidenceType": "programmatic IndexedDB connection reopen",
+      "status": "passed",
+      "ms": 4,
+      "detail": {
+        "entries": 1,
+        "drafts": 1,
+        "settings": 2,
+        "packs": 1
+      }
+    },
+    {
+      "name": "10 Actual app parser authenticates companion bytes and previews without writes",
+      "evidenceType": "actual app/companion modules + isolated fake IndexedDB",
+      "status": "passed",
+      "ms": 651,
+      "detail": {
+        "authenticatedBeforePreview": true,
+        "entriesWritten": 1,
+        "draftsWritten": 1,
+        "envelopeRecords": 3
+      }
+    },
+    {
+      "name": "11 Duplicate receipts, equal-clock changed versions and before-confirm concurrency",
+      "evidenceType": "actual app importer/provider programmatic integration",
+      "status": "passed",
+      "ms": 25,
+      "detail": {
+        "finalEntries": 2,
+        "finalDrafts": 2,
+        "duplicateWrites": 0,
+        "conflictCopies": 2,
+        "staleReplaceRejected": true
+      }
+    },
+    {
+      "name": "12 Actual full-archive export, readable contents, manifest and connection reopen",
+      "evidenceType": "actual app export/provider programmatic integration",
+      "status": "passed",
+      "ms": 99,
+      "detail": {
+        "archiveBytes": 23336,
+        "members": 14,
+        "readableNotes": 2,
+        "draftExcludedFromBook": true,
+        "modifiedMemberRejected": true,
+        "partialOpaqueMetadataOmitted": true,
+        "reminderNotResetForUnverifiedOffer": true
+      }
+    },
+    {
+      "name": "13 Isolated app restore retains exact entries, drafts and envelope metadata",
+      "evidenceType": "actual app archive reader/importer/provider",
+      "status": "passed",
+      "ms": 48,
+      "detail": {
+        "restoredEntries": 2,
+        "restoredDrafts": 2,
+        "fullSnapshotExact": true,
+        "secondArchiveReadable": true
+      }
+    },
+    {
+      "name": "14 Empty journal envelope metadata survives persistence, full export and isolated restore",
+      "evidenceType": "actual app metadata-only integration",
+      "status": "passed",
+      "ms": 24,
+      "detail": {
+        "entries": 0,
+        "drafts": 0,
+        "metadataRecords": 1,
+        "fullSnapshotExact": true
+      }
+    },
+    {
+      "name": "15 Actual companion reads and restores the generated app ZIP into an isolated store",
+      "evidenceType": "actual cross-component reverse import",
+      "status": "passed",
+      "ms": 10,
+      "detail": {
+        "entriesRestored": 2,
+        "draftsRestored": 2,
+        "retainedEnvelopeMetadata": true
+      }
+    },
+    {
+      "name": "16 Evidence integrity and precise coverage limits",
+      "evidenceType": "source identity + harness integrity",
+      "status": "passed",
+      "ms": 30,
+      "detail": {
+        "stages": 16,
+        "networkCalls": 0,
+        "unhandledErrors": 0,
+        "examinedModuleBytesUnchanged": true,
+        "unrelatedEntryEditorExcluded": true
+      }
+    }
+  ],
+  "finalIdentities": {
+    "app": {
+      "commit": "c9b5353e59dbdc8302ce08b1f40e8727756f60cf",
+      "status": "M docs/IMPLEMENTATION-2026-10-13.md\n M docs/PROTECTED-TRANSFER-FORMAT.md\n M src/views/DataView.protected-transfer.test.tsx\n M src/views/DataView.tsx\n M src/views/EntryEditor.tsx\n?? src/views/EntryEditor.opaque-recovery.test.tsx",
+      "productionTreeHash": "7790ea3f7bf9fe65911777d242d845113e03d89578dce87cc969fd778dc58894",
+      "examinedFiles": 109,
+      "examinedFolders": [
+        "src/storage",
+        "src/export",
+        "src/lib",
+        "src/types",
+        "src/import"
+      ]
+    },
+    "companion": {
+      "commit": "ba387031f57e09d013f83aa04d5abc7a3851d76c",
+      "status": "",
+      "productionTreeHash": "e406b4bce22025d189f5b55e92dfd4d058e11e23a09994a79e8da9607f8ab313",
+      "examinedFiles": 11,
+      "examinedFolders": [
+        "dist"
+      ]
+    }
+  },
+  "requirementCoverage": {
+    "1 Project context discovery": "Exact current commit, worktree and relevant source fingerprints recorded.",
+    "2 Product principles": "Fictional provided/private-field separation, private sharing choices, local-only operations and recoverability exercised.",
+    "3 Evidence-based plan": "This harness is bounded integration evidence, not proof of every product-plan item.",
+    "4 Journal integrity/release readiness": "Actual app import, duplicate/conflict receipts, stale confirmation, metadata, archive and isolated restore exercised; release HOLD remains.",
+    "5 Browser-to-app transfer": "Actual companion writers and actual app readers interoperate for plain and protected bytes; no physical receiving device or browser file-write proof.",
+    "6 Church/pastor publishing": "Simulated editor, recipient preview, offered pack, local QR generation and receiving flow exercised; public publication and physical QR scan untested.",
+    "7 Dashboard": "Simulated navigation and notes search exercised; no rendered browser/layout claim.",
+    "8 Preservation/backup guidance": "Actual full archive and exact isolated restore checked; unverified offers did not reset backup reminder.",
+    "9 Accessibility/offline polish": "No network operations observed in this local simulation; no accessibility, rendered/offline reload or assistive-technology certification.",
+    "10 Hosting/domain transition": "No domain, production host or deployment action attempted; requires separate authorized checks.",
+    "11 Complete Sunday": "This fictional source-to-reader-to-writing-to-transfer-to-archive-to-restore programmatic journey completed.",
+    "12 Delivery expectations": "External runnable harness, structured evidence and fictional artifacts delivered; no production edits or publication."
+  },
+  "status": "passed",
+  "finishedAt": "2026-10-13T22:07:25.696Z"
+}

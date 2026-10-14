@@ -1,0 +1,9 @@
+{
+  "name": "my-life-with-christ-companion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.mjs" },
+  "dependencies": { "qrcode-generator": "2.0.4" },
+  "devDependencies": { "fake-indexeddb": "6.2.5", "jsdom": "26.1.0" }
+}

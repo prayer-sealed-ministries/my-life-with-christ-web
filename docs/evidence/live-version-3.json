@@ -1,0 +1,152 @@
+{
+  "observed_at_utc": "2026-10-13T23:10:58Z",
+  "scope": "Final companion version-3 verification; no runtime changes or redeployment",
+  "site": {
+    "project_id": "appgprj_6ac621170d0081918c34b68a6fe97f90",
+    "url": "https://my-life-with-christ.systemslibrarian.chatgpt.site",
+    "audience": "public",
+    "version": 3,
+    "version_id": "appgprj_6ac621170d0081918c34b68a6fe97f90~appgver_ec608a6762ec8191a2a25af41dc52a41",
+    "deployment_id": "appgdep_6aceb03f9a08819183bc1146464032e8",
+    "deployment_status": "succeeded",
+    "deployment_updated_at": "2026-10-13T22:27:19.602188+00:00",
+    "published_source": "4c1a7bb904c817c277ed8c7790e53ade3aa64e41",
+    "platform_archive_content_hash": "sha256:72174ae43f5c3c53e489da19620b6079f9f467a9494867ce917749fae10bb041",
+    "platform_archive_files": 17,
+    "platform_archive_size_bytes": 215040
+  },
+  "automated": {
+    "command": "npm test",
+    "source": "4c1a7bb904c817c277ed8c7790e53ade3aa64e41",
+    "tests": 76,
+    "passed": 76,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_ms": 21467.020047,
+    "environment": "Node/jsdom/fake-indexeddb; no physical-device claim",
+    "warning_regression": "Simulated settings write failure retains warning instead of overwriting it with the ordinary download-offer message"
+  },
+  "live_browser": {
+    "environment": "Assistant cloud Chrome, new QA tab at the existing public origin",
+    "data": "Only labelled fictional QA material; existing browser storage preserved",
+    "checks": [
+      {
+        "name": "Rename fictional pastor draft",
+        "result": "Passed: list changed on the same page after save; focus remained in title field"
+      },
+      {
+        "name": "Create second fictional pastor draft",
+        "result": "Passed: second list row appeared after title/body save; focus remained in Provided notes"
+      },
+      {
+        "name": "Transfer history after plain download offer",
+        "result": "Passed: same-page timestamp changed from 3:28:33 PM to 4:10:37 PM in browser locale; counts stayed 1 entry and 0 drafts; file-saving and external-restore limits remained explicit; focus returned to review button"
+      },
+      {
+        "name": "Runtime DOM policy and local assets",
+        "result": "Observed connect-src none, local vendor/qrcode.js and app.js scripts, local style.css"
+      },
+      {
+        "name": "Transfer desktop overflow",
+        "result": "Document width 1173 CSS pixels within 1188-pixel viewport; no horizontal overflow in observed state"
+      },
+      {
+        "name": "Captured warning/error window",
+        "result": "Only browser-extension metadata errors observed; no companion-origin warning/error in inspected window"
+      }
+    ]
+  },
+  "runtime_files": [
+    {
+      "path": "dist/LICENSE.txt",
+      "sha256": "1d94941a0d0b07c561c4fa2677d23fe30245b3f159f72c63863b1b1ef9b4b2f6",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "568dd15c3e732b1a24ba9ecedf8a4cf75be90aee6497d349201dafc74e5de283",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/archive.js",
+      "sha256": "96e91e3d5c7aa366e139e9d678f05bf18bf1e62fd82d4eb00aa75a2cdde0d592",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/core.js",
+      "sha256": "b655c22c963589fdcddc008bd525eb37e6315e33e1868081bfaa5de9ea16b53b",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/envelope-metadata.js",
+      "sha256": "8dd338f61f6698aa4699c46b13f520c9257dd0430286e1caf7f7f8fb64ed607c",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/example-sermon-notes.json",
+      "sha256": "baded2ed2ac8cc45508d33b2212609ad1c820bf76a9ff1cbf3d6f058ffb60b76",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/icon.svg",
+      "sha256": "277b195994c55a6514d62b1e70965e103efe8da4b1793122ed9c81ea4d7926ad",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "deee960730518629faeb1c29bc537c2d13546f45a71dd373a057eac28b557f71",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/publishing-guide.md",
+      "sha256": "891b9d07610992c02bc4e45b8659fcda59dc2a587895ed33c646b8d39bc10796",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/save-queue.js",
+      "sha256": "f3fae7bf69b2c887e0a622cf74b7af8bf776ca499926699983aa9cf1fadd3e4d",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/sermon-notes-format.md",
+      "sha256": "ad489b6bac91c515891958002d60d2778fb16b945c10730ee39c4e454bf04c71",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/storage.js",
+      "sha256": "46897597b392bab520daa9f68594df83f5bc0cdd48d86d0fb62d32cc34550c56",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/style.css",
+      "sha256": "d21414363263641f569a0fa32137890bd48e9eb5fdbe5416338c07b11842dc5d",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/transfer.js",
+      "sha256": "aec60a80034ebb2c48350e388480933dea75d9597f62dae94d79d15379a050b1",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/vendor/QR-LICENSE.txt",
+      "sha256": "8cdf4067daf0b1ce73da0e6f51d1f375942781cd37f2aff60ea332c085360eb8",
+      "retained_package_matches": true
+    },
+    {
+      "path": "dist/vendor/qrcode.js",
+      "sha256": "79ec86f82856005b1c887905cfccfcfbec3821ca61c7fd5a952faa5f778f791c",
+      "retained_package_matches": true
+    }
+  ],
+  "limits": [
+    "No independent served-byte comparison: earlier direct asset HTTP requests received 403; no bypass attempted.",
+    "Supported download of platform archive could not be authorized or resolved; no alternate retrieval attempted. Platform provenance is distinct from local retained-package byte matching.",
+    "No induced real-browser storage failure; warning-retention evidence is automated simulation.",
+    "No actual phone, assistive technology, printed QR camera scan, native picker, physical file-durability, storage-full, cold-offline or stale-worker certification.",
+    "Download offer does not establish file persistence or receiving-app import.",
+    "Native release HOLD is unchanged."
+  ],
+  "source_mutations": "Documentation and evidence only after published source; dist files unchanged",
+  "github": "User-created companion repository naming decision remains pending; no writes, rename, repository creation or hosting move performed"
+}

@@ -1,0 +1,397 @@
+{
+  "recorded_at_utc": "2026-10-14T00:37:00Z",
+  "repository": "prayer-sealed-ministries/my-life-with-christ-web.",
+  "repository_id": 1418079428,
+  "audience": "private",
+  "branch": "main",
+  "source_commit": "cb065aead634686566dc1a0b43fc428d9e6050c2",
+  "exact_original_source_tree": "285a56331665b52535099b00daf8923c884b11df",
+  "source_file_count": 51,
+  "original_source_files": [
+    {
+      "path": ".github/workflows/pages.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5a44acea2cc76323a297c909be832edf86546c2",
+      "sha256": "efd7965a1600b16dcd6dd614e1934371061014afa5efcad34a138b16fda585de"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eaba288a3885db68e36a1be679368bc66034793f",
+      "sha256": "f037936c8c0f8548a83518c4956ffc9494f95743cb8dc79d7723ed9b278c98cb"
+    },
+    {
+      "path": ".openai/hosting.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a4b97150aa2845401c397426a5d5b621f7d9903",
+      "sha256": "90fbcf7be36fdee0ad942117b1f0a0c6b62b68451db5d5cc71d712d170c55806"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1b7ea8f3a85704b0e818a5e308abe30b21ec83e",
+      "sha256": "02025fcccfd13904b2ad2a547c306842862e18624e99d32be02fff4964387071"
+    },
+    {
+      "path": "compat/LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8332e58d1054cb35f3ec1419cab67c0cc5147ba",
+      "sha256": "1d94941a0d0b07c561c4fa2677d23fe30245b3f159f72c63863b1b1ef9b4b2f6"
+    },
+    {
+      "path": "compat/docs/SERMON-NOTES-FORMAT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "602c9b38fd4715b760c90f159c074e8c24a86896",
+      "sha256": "ad489b6bac91c515891958002d60d2778fb16b945c10730ee39c4e454bf04c71"
+    },
+    {
+      "path": "compat/src/export/fixtures.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b800b2c53dceedb84735100acb231d1af5204e7",
+      "sha256": "27bc4fc92cd5391fe4d0f4c31730f9a9229cc68b8278cf13abb67058540c7853"
+    },
+    {
+      "path": "compat/src/export/manifest.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a824de9ed7ec65f0e757e6cd093562936f1dbe8",
+      "sha256": "f94496b7d96ab685e6e5fe6ba30d128a47b84f215bdc71d4282040688925a040"
+    },
+    {
+      "path": "compat/src/export/migrate.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe093efd2f6b67e1d5c4a7a31e7d928893036f31",
+      "sha256": "f23ad8021ef65967c7953375b6fdf13dc7a364c35389a6195661b558ba936f1b"
+    },
+    {
+      "path": "compat/src/lib/entry-kinds.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d529090b440ed9417f1c840b0dd10fb30553afde",
+      "sha256": "73e609e07b415f42d8d919f36bd6c7af0224e6447e31f4a091ff5b0fe270af7a"
+    },
+    {
+      "path": "dist/LICENSE.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8332e58d1054cb35f3ec1419cab67c0cc5147ba",
+      "sha256": "1d94941a0d0b07c561c4fa2677d23fe30245b3f159f72c63863b1b1ef9b4b2f6"
+    },
+    {
+      "path": "dist/app.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "da3c8a65020e85353e2b315a2b15e9942da97264",
+      "sha256": "568dd15c3e732b1a24ba9ecedf8a4cf75be90aee6497d349201dafc74e5de283"
+    },
+    {
+      "path": "dist/archive.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d999c4f9deac8eaaa0e01996d424accf223cc7e7",
+      "sha256": "96e91e3d5c7aa366e139e9d678f05bf18bf1e62fd82d4eb00aa75a2cdde0d592"
+    },
+    {
+      "path": "dist/core.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c7add9358e1930fb744dad334e4d72b5f06dcc80",
+      "sha256": "b655c22c963589fdcddc008bd525eb37e6315e33e1868081bfaa5de9ea16b53b"
+    },
+    {
+      "path": "dist/envelope-metadata.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4412160d6cc44058b5b4bc08e2573dfb89de23c3",
+      "sha256": "8dd338f61f6698aa4699c46b13f520c9257dd0430286e1caf7f7f8fb64ed607c"
+    },
+    {
+      "path": "dist/example-sermon-notes.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2bc8fe048b78ee8fcb1df968aa6108dcd94594c3",
+      "sha256": "baded2ed2ac8cc45508d33b2212609ad1c820bf76a9ff1cbf3d6f058ffb60b76"
+    },
+    {
+      "path": "dist/icon.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "02571668be4c44ef884d50ea048fb827d73237c8",
+      "sha256": "277b195994c55a6514d62b1e70965e103efe8da4b1793122ed9c81ea4d7926ad"
+    },
+    {
+      "path": "dist/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9fa56a678e4a70432361f3a39cb92cac1024e52",
+      "sha256": "deee960730518629faeb1c29bc537c2d13546f45a71dd373a057eac28b557f71"
+    },
+    {
+      "path": "dist/publishing-guide.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b6b6103bbdd8d91747f92beff1b6c7af5352b13",
+      "sha256": "891b9d07610992c02bc4e45b8659fcda59dc2a587895ed33c646b8d39bc10796"
+    },
+    {
+      "path": "dist/save-queue.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6b678b709c171d81fe713075b464f0904fd11fc1",
+      "sha256": "f3fae7bf69b2c887e0a622cf74b7af8bf776ca499926699983aa9cf1fadd3e4d"
+    },
+    {
+      "path": "dist/sermon-notes-format.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "602c9b38fd4715b760c90f159c074e8c24a86896",
+      "sha256": "ad489b6bac91c515891958002d60d2778fb16b945c10730ee39c4e454bf04c71"
+    },
+    {
+      "path": "dist/storage.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d75022cffd842a53e1cd3a68086543fa34f83e5b",
+      "sha256": "46897597b392bab520daa9f68594df83f5bc0cdd48d86d0fb62d32cc34550c56"
+    },
+    {
+      "path": "dist/style.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1ab7ef7d55917b999d28ed700c2bcd84e24830b8",
+      "sha256": "d21414363263641f569a0fa32137890bd48e9eb5fdbe5416338c07b11842dc5d"
+    },
+    {
+      "path": "dist/transfer.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e274d1ae58056dbd9c16ed563da15e3f4fc1b105",
+      "sha256": "aec60a80034ebb2c48350e388480933dea75d9597f62dae94d79d15379a050b1"
+    },
+    {
+      "path": "dist/vendor/QR-LICENSE.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ddfc00746cdc4fbbb1a88f19f577ae52096b124",
+      "sha256": "8cdf4067daf0b1ce73da0e6f51d1f375942781cd37f2aff60ea332c085360eb8"
+    },
+    {
+      "path": "dist/vendor/qrcode.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df13f829bf41f36b82f0ed85751ed3b4c39cfeb8",
+      "sha256": "79ec86f82856005b1c887905cfccfcfbec3821ca61c7fd5a952faa5f778f791c"
+    },
+    {
+      "path": "docs/ACCESSIBILITY-ASSESSMENT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3109527fc6a946bb1aaf43393ea9e0de448ec29",
+      "sha256": "ab435ea0a8ace98cc47d26b10d79d9d86574b170e72ee7444e977e5fe8cfdd94"
+    },
+    {
+      "path": "docs/HOSTING-TRANSITION.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31b629413f3398e2b54caab122142887157bd895",
+      "sha256": "6624e4e4c9ce8444f0e92e940c9a93bb497c46a644a80b7b637efcba7a825f19"
+    },
+    {
+      "path": "docs/IMPLEMENTATION-2026-10-13.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5f79cb09c8d935c3502343ff5e8cc9e538761fa6",
+      "sha256": "3d672bef734ec4f90e650907a2ba6ceb5a2310c6e6be51a0520984a5a5fb506f"
+    },
+    {
+      "path": "docs/LIVE-VERIFICATION-2026-10-13.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74472175e85641696d1b2d36e6f999352fffb85c",
+      "sha256": "414facf09000cfccf6899964446d41d12bf249d9aef6e30216b03e447801ac97"
+    },
+    {
+      "path": "docs/RELEASE-2026-10-13.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ce196e9ebad52dfabca78033b619c5373f8d3d0",
+      "sha256": "f5329f90255fe611176ca87ffffdd20b9b2b48162e4b37a7824afd8a26f0a99e"
+    },
+    {
+      "path": "docs/evidence/live-version-3.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c347adc35f685abc58169dcc18bc731d64bafd0",
+      "sha256": "0c58ffb30ad7bc0c89185f7e5f3f2e814cbfd64020ee2f863e5e5538bdf89674"
+    },
+    {
+      "path": "docs/evidence/sunday-integration.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f1ba8003259518545b9e319164d86078d5d3706d",
+      "sha256": "d13c75c08eecc50deac5bb31222c1d45ecbea1c4412c14dd231172a0e95615bb"
+    },
+    {
+      "path": "docs/manual-acceptance.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e16df71cb0daac459d552e3a442c52ad4239b56",
+      "sha256": "6e493e118322b6a31246e0eb445afd6fd6083cb104763f6fd6cae7a1bed0f70c"
+    },
+    {
+      "path": "docs/transfer-format.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f2cdd408809b0ec467760d4182416b2834b4723",
+      "sha256": "e5f0238a09440db53b2b46af2ab16c7de137f61b7989c98024d0e9bedacaffab"
+    },
+    {
+      "path": "docs/verification.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96ecee5b19c82e6fd413470a2661cfc9869e7bd0",
+      "sha256": "0848ae9a893f189849d675f9d6075f0c291af49a4189de01762f12263217406f"
+    },
+    {
+      "path": "package-lock.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77324e7d9417eda58dc525ee5d304953b728dc38",
+      "sha256": "b3bdec86d87c70f614075b5892595d2c510171083994ed124d1dc5c2b4025aea"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9145c458b9c3192cd2f7267c819c4cec70e26473",
+      "sha256": "1279efc415613f45d4ccecf3aa28c5f0d4dd5209692399975ffab98037b384ff"
+    },
+    {
+      "path": "tests/accessibility.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d72662b18f0fab3c4f6fab9f537ce208f521775f",
+      "sha256": "2b86a338078dd50a78ce92205630f871208ea82e44bb5f89d4553164e27e5fe5"
+    },
+    {
+      "path": "tests/browser-qa.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6873e7cd5d10ec9f5aeff1ed640399e766e3cc55",
+      "sha256": "0f21125c82b660fbb6cd66e6cc424fbdb248d5fa48437e1281cbfc9a0a403e25"
+    },
+    {
+      "path": "tests/core.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6466c52b8e3de184d785620d62d814153e622807",
+      "sha256": "52b03467834036358319791ac8002a9b9dc0414fb2b06327ddbac588a295e6f0"
+    },
+    {
+      "path": "tests/envelope-metadata.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a32373cd31dc0fe76db0bd0842cb6658327009bb",
+      "sha256": "b0cec85f95290dd6cf8730b012576bad87c005587cb80faa0ceb8da2ee595e73"
+    },
+    {
+      "path": "tests/fixtures/envelope-metadata-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e27f844f7884ffa7ed2e15662ec31ccede2538a5",
+      "sha256": "c3de24b2b81793159b944b14440d5924739c9a04dc5532bf9e172f4f2e3f0368"
+    },
+    {
+      "path": "tests/fixtures/protected-v1.journey.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4709598ef35a96f6266aff44027cbc7d8323f80e",
+      "sha256": "ce7082affa7efe4631a7593fad7c3c9826eb1d2ccb0636b6f5eda8c09459f23d"
+    },
+    {
+      "path": "tests/fixtures/protected-v1.lwc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76d758cf36ed8e07bab193db616ee4a2ceaa2814",
+      "sha256": "5355253deb3647100c3e667185d788dae545bbcfbc2570168635023266727950"
+    },
+    {
+      "path": "tests/fixtures/protected-v1.metadata.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a964b415cd1cd873835c10758d5ec57f5ecca14b",
+      "sha256": "eb5c5ab10e76d3876edd117d095b88b318a785418b0975b63dc3648f76849833"
+    },
+    {
+      "path": "tests/large-journal.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8804dd8c7625cf1d60d52735b2b5f9e1892eeb4a",
+      "sha256": "6116cfb0cc405fcfad59d16d20d186bf47d475d4a42f5508e00e77d731ad5260"
+    },
+    {
+      "path": "tests/protected-format.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77f4f3faf2cd7833644dd1dadb775a75ae38770d",
+      "sha256": "2a9f87b08041658f62c25d60993eecc8ffc00a9e4ee9da432635574260c189ad"
+    },
+    {
+      "path": "tests/save-queue.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96f0a0f153045d8bf33cbe438b73e88cd23f6dd6",
+      "sha256": "d4417881f29ce7d24c14e33e335ed9e75f9f29d68a3ca291ab15e76f770d8c77"
+    },
+    {
+      "path": "tests/storage-integrity.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b36e29e394482bc66314748aba28de1919480b59",
+      "sha256": "e765b56300f0d39afca78229e859ae9deda81dbfffc7d2eed51d0790b30b060e"
+    },
+    {
+      "path": "tests/ui.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b1882414223f965e88e6dd489a245a95c289b87c",
+      "sha256": "f5368dc049290629cf31346f78b80d2f3b71eb8c793dbe32eb0a575e0bab6de5"
+    }
+  ],
+  "history": {
+    "path": "recovery/companion-source-history.bundle",
+    "complete": true,
+    "commits": 16,
+    "head": "cb065aead634686566dc1a0b43fc428d9e6050c2",
+    "sha256": "eee6a2a3864b351ac3c49fb699266263d6d1aa6b6621e58a71d4c4f09ff6929d",
+    "git_blob_sha": "ea4c17ba8485d6dfb4dbbd082d51c57227b4647c",
+    "bytes": 171261,
+    "verification": "git bundle verify passed; complete history, main ref at source commit"
+  },
+  "fidelity_boundary": "GitHub connector-created commits contain an exact original file snapshot plus additive handoff artifacts. Original commit identities, authors, timestamps and full history are retained exactly inside the Git bundle, not recreated as native GitHub commits.",
+  "existing_deployment": {
+    "url": "https://my-life-with-christ.systemslibrarian.chatgpt.site",
+    "audience": "public",
+    "project_id": "appgprj_6ac621170d0081918c34b68a6fe97f90",
+    "version": 3,
+    "version_id": "appgprj_6ac621170d0081918c34b68a6fe97f90~appgver_ec608a6762ec8191a2a25af41dc52a41",
+    "deployment_id": "appgdep_6aceb03f9a08819183bc1146464032e8",
+    "source_commit": "4c1a7bb904c817c277ed8c7790e53ade3aa64e41",
+    "platform_archive_content_hash": "sha256:72174ae43f5c3c53e489da19620b6079f9f467a9494867ce917749fae10bb041",
+    "status_last_verified": "succeeded on 2026-10-13 at 23:09 UTC"
+  },
+  "limits": [
+    "No repository rename, permission change, new repository or hosting/DNS migration",
+    "No unchanged-runtime redeployment or Pages workflow execution",
+    "No new native release or physical-device/assistive-technology claim",
+    "Tests not rerun for the byte-identical source handoff; existing final runtime evidence is 76 passed, 0 failed/skipped"
+  ]
+}
