@@ -33,6 +33,11 @@ name: Publish web companion
 on:
   push:
     branches: [main]
+  # Pull requests run `checks` only. Without this a PR carried no signal at all,
+  # which is how the compatibility defect this repository just fixed could have
+  # been merged without anything noticing.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -72,8 +77,21 @@ jobs:
       - name: Validate the artifact that would be published
         run: npm run validate:artifact
 
+      # The offline half of native-app compatibility: are the compat/ copies
+      # still the bytes recorded in compat/SOURCE.json, do the interchange
+      # versions still agree, and does the app's own importer still run clean
+      # against ordinary companion output? Whether native main has moved is a
+      # different question, answered by .github/workflows/native-drift.yml.
+      - name: Native interchange contract
+        run: npm run verify:app-compat
+
   package:
     needs: checks
+    # A pull request must never publish. This is not the kind of conditional the
+    # comment above warns about: a push to main is still unconditional, so a
+    # deploy cannot silently stop happening — only a PR is excluded, and a PR
+    # publishing would be the bug.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -94,6 +112,7 @@ jobs:
 
   deploy:
     needs: package
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

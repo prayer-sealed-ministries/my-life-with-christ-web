@@ -6,9 +6,13 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node tests/browser-qa.mjs",
-    "validate:artifact": "node scripts/validate-artifact.mjs"
+    "validate:artifact": "node scripts/validate-artifact.mjs",
+    "verify:app-compat": "node scripts/verify-app-compat.mjs",
+    "check:native-drift": "node scripts/check-native-drift.mjs"
   },
-  "dependencies": { "qrcode-generator": "2.0.4" },
+  "dependencies": {
+    "qrcode-generator": "2.0.4"
+  },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0",

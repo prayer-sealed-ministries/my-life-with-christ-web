@@ -1,0 +1,63 @@
+{
+  "//": "Generated and enforced. Run: npm run verify:app-compat",
+  "purpose": "Records exactly which native-app material the companion carries, where it came from, and what the two sides agree about. compat/ is used by tests and is never served.",
+  "nativeRepository": "prayer-sealed-ministries/my-life-with-christ",
+  "nativeSourceSha": "700b89d6d3b293d2dcaf30cc778883c2347abde7",
+  "previousNativeSourceSha": "e69f961f20280da4d9ef5fec9571eb0e218c1afa",
+  "syncedOn": "2026-10-15",
+  "interchange": {
+    "journeyExport": 1,
+    "protectedTransfer": 1,
+    "sermonNotes": 1
+  },
+  "notes": [
+    "Every file below is an EXACT byte copy of the native path at nativeSourceSha.",
+    "Exactness is deliberate: it makes staleness mechanically detectable instead of a judgement call.",
+    "If a copy ever has to be adapted, change its kind to \"adapted\", document the reason beside the code, and rely on the behavioural tests rather than the hash.",
+    "A local hash check cannot notice that native main has moved on. That is what the scheduled drift workflow is for."
+  ],
+  "files": [
+    {
+      "companionPath": "compat/src/lib/entry-kinds.ts",
+      "nativePath": "src/lib/entry-kinds.ts",
+      "kind": "exact",
+      "why": "Entry kinds and their labels. Imported by the type-stripped app importer in tests.",
+      "sha256": "495198b6ba25772574608a71f77b05bdcb6e1aaff700779a9d067434337c4014"
+    },
+    {
+      "companionPath": "compat/src/export/migrate.ts",
+      "nativePath": "src/export/migrate.ts",
+      "kind": "exact",
+      "why": "The app's own journey-export importer. Companion tests run it as the compatibility oracle.",
+      "sha256": "c5598f3bc07db03e64b302069a3ddd2976ae58cb0e7a88324dd46a459383f32d"
+    },
+    {
+      "companionPath": "compat/src/export/fixtures.ts",
+      "nativePath": "src/export/fixtures.ts",
+      "kind": "exact",
+      "why": "The app's upstream entry fixtures, used as shared golden inputs.",
+      "sha256": "1abadb28bf977a7f031d7c3515b7a83abd6dbf9193db2bdc9c10de893b28a4a4"
+    },
+    {
+      "companionPath": "compat/src/export/manifest.mjs",
+      "nativePath": "src/export/manifest.mjs",
+      "kind": "exact",
+      "why": "Canonical archive MANIFEST grammar and checksum rules.",
+      "sha256": "892d3e9ee0f032d2b90f1464f02a9de3727dafb0cfcf9a16f37780aabadc190b"
+    },
+    {
+      "companionPath": "compat/docs/SERMON-NOTES-FORMAT.md",
+      "nativePath": "docs/SERMON-NOTES-FORMAT.md",
+      "kind": "exact",
+      "why": "The Sermon Pack format specification the companion builder targets.",
+      "sha256": "62b3939339cf10505ff0f150d53032bff3b2c5e9caa2804e7891694152f48117"
+    },
+    {
+      "companionPath": "compat/LICENSE",
+      "nativePath": "LICENSE",
+      "kind": "exact",
+      "why": "Upstream licence, retained with the copied material.",
+      "sha256": "958f9736e15032052e96a6647892d711d8edf374a50608526c7873e73c704dfe"
+    }
+  ]
+}

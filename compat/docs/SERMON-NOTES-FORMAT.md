@@ -139,4 +139,3 @@ const notes = {
 };
 fs.writeFileSync('sermon-notes.json', JSON.stringify(notes, null, 2));
 ```
-
