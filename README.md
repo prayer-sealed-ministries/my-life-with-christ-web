@@ -1,6 +1,8 @@
 # My Life With Christ — Web Companion
 
-A portable, browser-local writing companion for My Life With Christ. October 2026 improvements. Source integration and publication to the existing Sites address were authorized on October 13; see `docs/RELEASE-2026-10-13.md` and the final deployment evidence for publication state.
+A portable, browser-local writing companion for My Life With Christ. October 2026 improvements.
+
+**Live at <https://journal.prayersealed.org/>** on GitHub Pages. The earlier OpenAI Sites address, <https://my-life-with-christ.systemslibrarian.chatgpt.site/>, is deliberately still live so readers can export journals from it — browser storage does not follow a domain change. See [docs/HOSTING-GITHUB-PAGES-2026-10-14.md](docs/HOSTING-GITHUB-PAGES-2026-10-14.md) for current hosting and the migration procedure; `docs/RELEASE-2026-10-13.md` and the Sites records are history.
 
 ## What works
 
@@ -36,9 +38,9 @@ Tests use Node 24, Python 3, jsdom, and fake-indexeddb. The DOM tests are not re
 
 All public assets are relative paths, suitable for a domain root or a GitHub Pages project subpath. There are no ChatGPT runtime APIs or sign-in dependencies in the application.
 
-**Intended host: GitHub Pages, at `https://journal.prayersealed.org/`.** [The Pages workflow](.github/workflows/pages.yml) runs the suite, the rendered-browser harness and the artifact validator, then publishes `dist/` on every push to `main` and on manual dispatch. `dist/CNAME` pins the domain, and `npm run validate:artifact` refuses an artifact whose CNAME is missing or wrong.
+**Host: GitHub Pages, live at <https://journal.prayersealed.org/>** over enforced HTTPS. [The Pages workflow](.github/workflows/pages.yml) runs the suite, the rendered-browser harness and the artifact validator, then publishes `dist/` on every push to `main` and on manual dispatch; a failed check cannot reach the site. `dist/CNAME` keeps the artifact and the configured domain in agreement, and `npm run validate:artifact` refuses an artifact whose CNAME is missing or wrong.
 
-**That move is not finished.** Pages cannot be enabled while this repository is private on the organization's free plan — the API refuses with "Your current plan does not support GitHub Pages for this repository" — so there is no deployment, certificate or HTTPS at the new address yet. [docs/HOSTING-GITHUB-PAGES-2026-10-14.md](docs/HOSTING-GITHUB-PAGES-2026-10-14.md) is the current hosting instruction; it records the blocker, the exact GoDaddy record to change, and the order of operations.
+The deployed site is byte-identical to `dist/` across all 12 runtime files, and a live check of the real address found 0 axe violations on all nine routes, no horizontal overflow at 1280/390/320 CSS px, no page errors, and no request to any other host. [docs/HOSTING-GITHUB-PAGES-2026-10-14.md](docs/HOSTING-GITHUB-PAGES-2026-10-14.md) is the current hosting instruction and carries the evidence and the remaining limits.
 
 **The existing site stays up:** <https://my-life-with-christ.systemslibrarian.chatgpt.site/>, served from an OpenAI Sites project. It is not redirected, disabled or retired, and its browser storage is untouched. A GitHub deployment does not update it.
 

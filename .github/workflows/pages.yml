@@ -16,20 +16,19 @@ name: Publish web companion
 #              configured and the artifact uploaded.
 #   deploy   — publish it. Needs package, so a failed check cannot reach a site.
 #
-# `package` is expected to FAIL until GitHub Pages is enabled on this
-# repository, which the organization's free plan does not allow while the
-# repository is private:
+# Publication history, so the job split below reads as deliberate rather than
+# defensive: `package` used to fail on every run, because GitHub Pages is not
+# available for a private repository on an organization's free plan —
 #
 #   Get Pages site failed ... HttpError: Not Found
 #   POST /repos/.../pages -> 422 Your current plan does not support GitHub
 #   Pages for this repository.
 #
-# That failure is deliberately isolated into its own job so the quality signal
-# stays honest. The checks job going green means the companion is sound; the
-# package job going red means exactly one thing, and it clears by itself once
-# the plan blocker is resolved — no flag to set and nothing to remember, so a
-# push cannot silently stop deploying. See
-# docs/HOSTING-GITHUB-PAGES-2026-10-14.md.
+# The repository was made public on 14 October 2026 and Pages enabled with
+# Actions as the source, so all three jobs now pass. The split stays: it keeps
+# the quality signal (`checks`) separate from the ability to publish
+# (`package`), so a hosting problem can never be mistaken for a broken
+# companion. See docs/HOSTING-GITHUB-PAGES-2026-10-14.md.
 
 on:
   push:
