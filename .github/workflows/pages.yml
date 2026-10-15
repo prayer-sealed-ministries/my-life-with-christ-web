@@ -72,6 +72,14 @@ jobs:
       - name: Validate the artifact that would be published
         run: npm run validate:artifact
 
+      # The offline half of native-app compatibility: are the compat/ copies
+      # still the bytes recorded in compat/SOURCE.json, do the interchange
+      # versions still agree, and does the app's own importer still run clean
+      # against ordinary companion output? Whether native main has moved is a
+      # different question, answered by .github/workflows/native-drift.yml.
+      - name: Native interchange contract
+        run: npm run verify:app-compat
+
   package:
     needs: checks
     runs-on: ubuntu-latest

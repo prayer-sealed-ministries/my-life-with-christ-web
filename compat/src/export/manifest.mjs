@@ -215,4 +215,3 @@ export async function verifyArchiveManifest(files) {
 
   return { ok: problems.length === 0, examined, problems };
 }
-

@@ -88,4 +88,3 @@ export function resolveEntryKind(value: unknown): EntryKind | null {
   }
   return null;
 }
-

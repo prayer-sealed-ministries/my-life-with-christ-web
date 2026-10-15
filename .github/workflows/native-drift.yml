@@ -1,0 +1,80 @@
+name: Native contract drift
+
+# Does the native app still agree with the compatibility snapshot this
+# repository carries in compat/?
+#
+# Why this is a separate, scheduled workflow rather than part of ordinary CI:
+#
+#   compat/ holds byte-exact copies of native-app source, and the companion's
+#   tests type-strip them and run the app's REAL importer as a compatibility
+#   oracle. When those copies go stale, the companion proves compatibility with
+#   a version of the app that no longer exists. That is not hypothetical — the
+#   oracle was 33 commits behind and was concealing a live defect in the draft
+#   form the companion produced.
+#
+#   Catching that needs a look at the OTHER repository, which means the network.
+#   Putting a network call in required CI would let a GitHub outage present
+#   itself as a format incompatibility, and a check that cries wolf is how a
+#   real alarm gets ignored. So:
+#
+#     required CI  -> npm run verify:app-compat   (offline, deterministic)
+#     this workflow -> npm run check:native-drift (weekly, and on demand)
+#
+#   The drift script distinguishes the two outcomes that matter:
+#     exit 1 = a tracked file genuinely changed   -> this job FAILS, loudly
+#     exit 2 = could not find out (network/auth)  -> warning, NOT a failure
+#
+# Nothing here copies native code into this repository and nothing is
+# auto-merged. A human reads the diff and decides, because the last drift
+# needed a fix on this side rather than a blind re-copy.
+
+on:
+  schedule:
+    # Mondays, 06:17 UTC. Off the hour on purpose: scheduled runs cluster on
+    # the hour and get delayed.
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-drift
+  cancel-in-progress: false
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+
+      # The offline check first. If the local snapshot is already inconsistent
+      # with itself, a cross-repository comparison would be meaningless.
+      - name: Local compatibility contract
+        run: npm run verify:app-compat
+
+      - name: Compare against current native main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          npm run check:native-drift
+          status=$?
+          set -e
+          case "$status" in
+            0)
+              echo "::notice::Companion compatibility snapshot is in sync with native main."
+              ;;
+            2)
+              echo "::warning::Native drift check was INCONCLUSIVE (network, rate limit or auth). This is not a compatibility finding; nothing can be concluded about drift. Re-run this workflow to try again."
+              ;;
+            *)
+              echo "::error::Native contract DRIFT detected. The native app changed material this repository copies into compat/. Read the compare link in the log, re-sync compat/, update compat/SOURCE.json, and expect companion tests to fail if the contract really moved."
+              exit 1
+              ;;
+          esac

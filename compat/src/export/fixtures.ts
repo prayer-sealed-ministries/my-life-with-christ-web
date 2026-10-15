@@ -109,4 +109,3 @@ export const COLLIDER_B: Entry = {
 };
 
 export const ALL_ENTRIES: Entry[] = [AWKWARD, SERMON, READING, COLLIDER_A, COLLIDER_B];
-
