@@ -2,8 +2,8 @@
   "//": "Generated and enforced. Run: npm run verify:app-compat",
   "purpose": "Records exactly which native-app material the companion carries, where it came from, and what the two sides agree about. compat/ is used by tests and is never served.",
   "nativeRepository": "prayer-sealed-ministries/my-life-with-christ",
-  "nativeSourceSha": "700b89d6d3b293d2dcaf30cc778883c2347abde7",
-  "previousNativeSourceSha": "e69f961f20280da4d9ef5fec9571eb0e218c1afa",
+  "nativeSourceSha": "8f3a58663c61d6c050893283489a4e3f58054584",
+  "previousNativeSourceSha": "700b89d6d3b293d2dcaf30cc778883c2347abde7",
   "syncedOn": "2026-10-15",
   "interchange": {
     "journeyExport": 1,
@@ -29,7 +29,7 @@
       "nativePath": "src/export/migrate.ts",
       "kind": "exact",
       "why": "The app's own journey-export importer. Companion tests run it as the compatibility oracle.",
-      "sha256": "c5598f3bc07db03e64b302069a3ddd2976ae58cb0e7a88324dd46a459383f32d"
+      "sha256": "0025209cb1423b4ef85ac914f18a6e059f597b1a4a0d2e03752571e0e6635a6d"
     },
     {
       "companionPath": "compat/src/export/fixtures.ts",
