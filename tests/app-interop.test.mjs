@@ -502,3 +502,55 @@ test('an empty journal is valid on both sides and adds nothing', async () => {
  const result = await db.importJourney(overTheWire(empty));
  assert.equal(result.entriesAdded, 0);
 });
+
+// ---------------------------------------------------------------------------
+// Provided notes that came out of a Word document
+// ---------------------------------------------------------------------------
+
+test('provided notes from a Word document survive the round trip, named for what they are', async () => {
+ /*
+  The app learned to read a .docx handed out at church, and records that it
+  did: SourceMaterial.format is `docx` rather than `txt`, because calling it
+  text merely because extraction produced text would be a lie on the record
+  about where somebody's words came from.
+
+  That is an interchange change, and this is the check that the companion did
+  not quietly become the reason it cannot be carried. Before this, the
+  companion's validator rejected the format outright — a perfectly well-formed
+  app export would have been refused with "Provided notes are malformed."
+ */
+ const sermon = fictionalSermon();
+ sermon.sourceMaterial = {
+  body: 'FICTIONAL-COMPAT handout read from a Word document',
+  filename: 'FICTIONAL-COMPAT-handout.docx',
+  importedAt: '2026-10-15T10:00:00.000Z',
+  format: 'docx',
+  parserVersion: 1,
+  futureSourceField: {keep: 'FICTIONAL-COMPAT nested source'},
+ };
+
+ // The app's own importer first, so what the companion receives is what the
+ // app would actually have written.
+ const fromApp = appImport(overTheWire(makeJourney([sermon])));
+ assert.deepEqual(fromApp.warnings, [], 'the app itself is content with the format');
+ assert.equal(fromApp.entries[0].sourceMaterial.format, 'docx');
+
+ const result = await db.importJourney(makeJourney(fromApp.entries, []));
+ assert.equal(result.entriesAdded, 1, 'the companion accepts it');
+
+ const [stored] = await db.all('entries');
+ assert.equal(stored.sourceMaterial.format, 'docx', 'still named for what it is');
+ assert.equal(stored.sourceMaterial.body, sermon.sourceMaterial.body, 'with its words intact');
+ assert.equal(stored.sourceMaterial.filename, 'FICTIONAL-COMPAT-handout.docx');
+ // Unknown fields ride along, as every other provided-note field does.
+ assert.deepEqual(stored.sourceMaterial.futureSourceField, {
+  keep: 'FICTIONAL-COMPAT nested source',
+ });
+
+ // And back out again without loss, into something the app accepts.
+ const exported = prepareJournalExport(await db.all('entries'), [], {allowEmpty: true});
+ const returned = appImport(overTheWire(exported));
+ assert.deepEqual(returned.warnings, [], 'the app accepts what the companion returns');
+ assert.equal(returned.entries[0].sourceMaterial.format, 'docx', 'the format survives both ways');
+ assert.equal(returned.entries[0].sourceMaterial.body, sermon.sourceMaterial.body);
+});

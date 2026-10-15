@@ -22,7 +22,7 @@ export function validateEntry(e){
  for(const a of e.anchors){if(!isObject(a)||!['scripture','topic','book'].includes(a.kind))throw Error('An entry contains an unsupported anchor.');if(a.kind==='topic'&&typeof a.topicId!=='string')throw Error('Invalid topic anchor.');if(a.kind!=='topic'&&typeof a.book!=='string')throw Error('Invalid book anchor.');if(a.kind==='scripture'&&!['chapterStart','chapterEnd','verseStart','verseEnd'].every(k=>Number.isInteger(a[k])&&a[k]>0))throw Error('Invalid Scripture anchor.');}
  for(const l of e.links)if(!isObject(l)||typeof l.url!=='string')throw Error('An entry contains an invalid link.');
  for(const k of ['place','speaker','sermonSeries','prayer'])if(e[k]!==undefined&&typeof e[k]!=='string')throw Error('An entry contains an invalid '+k+' field.');
- if(e.sourceMaterial!==undefined){const m=e.sourceMaterial;if(!isObject(m)||typeof m.body!=='string'||typeof m.filename!=='string'||typeof m.importedAt!=='string'||!['txt','markdown','pdf','sermon-notes-json'].includes(m.format))throw Error('Provided notes are malformed. Keep the original file.');}
+ if(e.sourceMaterial!==undefined){const m=e.sourceMaterial;if(!isObject(m)||typeof m.body!=='string'||typeof m.filename!=='string'||typeof m.importedAt!=='string'||!['txt','markdown','pdf','docx','sermon-notes-json'].includes(m.format))throw Error('Provided notes are malformed. Keep the original file.');}
  if(typeof e.forDescendants!=='boolean'||!['private','shared'].includes(e.visibility))throw Error('An entry contains invalid preferences.');
  return e;
 }
