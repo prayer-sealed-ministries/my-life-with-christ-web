@@ -4,6 +4,15 @@ A portable, browser-local writing companion for My Life With Christ. October 202
 
 **Live at <https://journal.prayersealed.org/>** on GitHub Pages. The earlier OpenAI Sites address, <https://my-life-with-christ.systemslibrarian.chatgpt.site/>, is deliberately still live so readers can export journals from it — browser storage does not follow a domain change. See [docs/HOSTING-GITHUB-PAGES-2026-10-14.md](docs/HOSTING-GITHUB-PAGES-2026-10-14.md) for current hosting and the migration procedure; `docs/RELEASE-2026-10-13.md` and the Sites records are history.
 
+## The app is coming
+
+This web companion is the browser edition of **My Life with Christ**, a private
+Scripture journal from [Prayer Sealed Ministries](https://www.prayersealed.org/).
+The iPhone and Android apps are in development: browse Scripture by book,
+section, or life topic, attach sermon notes, reflections, and prayers to any
+passage, and keep it all on your device, with no account and no server. Until
+they ship, start here and export your journal to carry it into the app.
+
 ## What works
 
 - Five entry kinds: sermon, Bible reading, prayer, reflection, letter.
