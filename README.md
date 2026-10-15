@@ -44,7 +44,9 @@ The deployed site is byte-identical to `dist/` across all 12 runtime files, and 
 
 **The existing site stays up:** <https://my-life-with-christ.systemslibrarian.chatgpt.site/>, served from an OpenAI Sites project. It is not redirected, disabled or retired, and its browser storage is untouched. A GitHub deployment does not update it.
 
-When changing origins, existing IndexedDB data does not move automatically. Browser storage is per-origin, and a CNAME, custom domain or redirect does not carry it: a reader at the new address sees an empty journal until they import a file. Readers download a full backup at the old site and import it at the new one, keeping the old site available meanwhile. The procedure is in the hosting document above, and [tests/migration.test.mjs](tests/migration.test.mjs) checks it against a genuinely separate database — empty destination, destination that already holds writing, repeated import, changed-version conflict, malformed input, protected `.lwc` round trip, and opaque metadata.
+**No migration was needed for this move:** no journals existed at the Sites origin, as the owner confirmed on 14 October 2026.
+
+That constraint still matters for any future change of address, so the procedure and its tests are kept. Browser storage is per-origin, and a CNAME, custom domain or redirect does not carry it: a visitor at a new address sees an empty journal until they import a file they exported from the old one. The procedure is in the hosting document above, and [tests/migration.test.mjs](tests/migration.test.mjs) checks it against a genuinely separate database — empty destination, destination that already holds writing, repeated import, changed-version conflict, malformed input, protected `.lwc` round trip, and opaque metadata.
 
 ## Limits stated in the product
 

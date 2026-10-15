@@ -106,26 +106,35 @@ repository configuration — but the file is what keeps the artifact and the
 configured domain in agreement, and `npm run validate:artifact` fails if it is
 missing or names the wrong host.
 
-## Keeping the old site
+## The old site, and why no migration was needed
 
-`https://my-life-with-christ.systemslibrarian.chatgpt.site/` **stays up and
-stays usable.** It is not redirected, not disabled, not retired, and its browser
-storage is not touched.
+**No journals existed at the Sites origin at the time of this move.** The owner
+confirmed that on 14 October 2026. So nothing had to be carried across, and no
+reader is stranded by the change of address. This is the owner's statement about
+their own deployment, not something this repository can verify — browser storage
+is private to each visitor's browser and is not observable from here.
 
-That is not politeness; it is the only route a reader's journal can take.
-Browser storage is per-origin: IndexedDB at the Sites address is invisible to
-`journal.prayersealed.org`, and a CNAME, a custom domain or a redirect does not
-move it. A reader who opens the new address will see an empty journal until they
-import a file. Redirecting the old origin would strand every existing journal
-behind a hostname that no longer answers.
+`https://my-life-with-christ.systemslibrarian.chatgpt.site/` is nevertheless
+**still live, not redirected, not disabled, not retired, and its storage is
+untouched.** Retiring it is now a free choice rather than a constraint, and it
+remains the owner's decision; nothing here depends on it any more.
 
-Updating the old site's own wording to point readers at the new address needs
-the OpenAI Sites tooling for project
+Had there been journals, the old origin could not have been retired or
+redirected. Browser storage is per-origin: IndexedDB at the Sites address is
+invisible to `journal.prayersealed.org`, and a CNAME, a custom domain or a
+redirect does not move it. That constraint did not apply this time. It will
+apply to any **future** origin change, which is what the procedure below is for.
+
+Updating the old site's own wording — to point visitors at the new address, say
+— needs the OpenAI Sites tooling for project
 `appgprj_6ac621170d0081918c34b68a6fe97f90`, which is not available here. A
-GitHub Pages deployment does **not** update that site. If the old origin should
-carry a migration notice, that is a separate change made through Sites.
+GitHub Pages deployment does **not** update that site.
 
-## Moving a journal between the two addresses
+## Moving a journal between origins
+
+Not required for this move — there were no journals to move. Recorded because
+it **will** be required by any future change of address, and because the
+behaviour it depends on is under test.
 
 The procedure, for a reader:
 
@@ -175,10 +184,13 @@ Verified on 14 October 2026:
 
 Not verified, and not claimed:
 
-- **No real-user journal has been migrated.** The migration evidence is
-  synthetic fictional journals plus the harness's own import flows.
-- The old Sites origin still carries no notice pointing readers here. Changing
-  it needs the Sites tooling for project
+- **No journal has been migrated, because there were none to migrate** (see
+  above). The migration tests run against synthetic fictional journals, which is
+  evidence that the format and the importer behave, not evidence of a real
+  move.
+- The old Sites origin carries no notice pointing visitors here, and does not
+  need one now that no journals are held there. Changing its wording would need
+  the Sites tooling for project
   `appgprj_6ac621170d0081918c34b68a6fe97f90`, which this work does not have. A
   GitHub deployment does not update that site.
 - Headless Chromium only. Firefox, Safari/WebKit, real screen readers, physical
