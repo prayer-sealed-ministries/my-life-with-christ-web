@@ -99,6 +99,7 @@ async function main() {
   // ---- 2. Exact snapshots are still exactly what was recorded. ----
   let exact = 0;
   let adapted = 0;
+  let generated = 0;
   for (const entry of files) {
     const path = resolve(ROOT, entry.companionPath);
     if (!existsSync(path)) {
@@ -111,7 +112,15 @@ async function main() {
       adapted += 1;
       continue;
     }
-    exact += 1;
+    if (entry.kind === 'generated') {
+      // Made from native data by scripts/sync-app-data.mjs. Its own bytes are
+      // hash-checked like an exact copy; it must also say which native bytes
+      // it was made from, or the drift workflow has nothing to compare.
+      generated += 1;
+      if (!/^[0-9a-f]{64}$/.test(entry.sourceSha256 ?? '')) {
+        failures.push({ assertion: 'SNAPSHOTS_EXACT', detail: `${entry.companionPath} is generated but records no sourceSha256` });
+      }
+    } else exact += 1;
     const actual = createHash('sha256').update(await readFile(path)).digest('hex');
     if (actual !== entry.sha256) {
       failures.push({
@@ -120,11 +129,11 @@ async function main() {
           `${entry.companionPath} no longer matches the recorded snapshot of ${entry.nativePath}\n` +
           `          recorded ${entry.sha256}\n` +
           `          actual   ${actual}\n` +
-          `          If this change is intended, re-sync from ${manifest.nativeRepository} and update compat/SOURCE.json.`,
+          `          If this change is intended, re-sync from ${manifest.nativeRepository} (npm run sync:app-data for generated data) and update compat/SOURCE.json.`,
       });
     }
   }
-  ran.set('SNAPSHOTS_EXACT', `${exact} exact copies hash-verified${adapted ? `, ${adapted} adapted (behaviour-tested)` : ''}`);
+  ran.set('SNAPSHOTS_EXACT', `${exact} exact copies and ${generated} generated modules hash-verified${adapted ? `, ${adapted} adapted (behaviour-tested)` : ''}`);
 
   // ---- 3. The recorded interchange versions match the shipped runtime. ----
   /*

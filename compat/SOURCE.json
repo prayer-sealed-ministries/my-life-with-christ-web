@@ -14,7 +14,8 @@
     "Every file below is an EXACT byte copy of the native path at nativeSourceSha.",
     "Exactness is deliberate: it makes staleness mechanically detectable instead of a judgement call.",
     "If a copy ever has to be adapted, change its kind to \"adapted\", document the reason beside the code, and rely on the behavioural tests rather than the hash.",
-    "A local hash check cannot notice that native main has moved on. That is what the scheduled drift workflow is for."
+    "A local hash check cannot notice that native main has moved on. That is what the scheduled drift workflow is for.",
+    "A \"generated\" file is an ES module made from a native data file by scripts/sync-app-data.mjs: sourceSha256 is the native bytes (what the drift workflow compares), sha256 is the module written here (what verify:app-compat checks). dataSourceSha is the native commit the data was last synced from."
   ],
   "files": [
     {
@@ -58,6 +59,568 @@
       "kind": "exact",
       "why": "Upstream licence, retained with the copied material.",
       "sha256": "958f9736e15032052e96a6647892d711d8edf374a50608526c7873e73c704dfe"
+    },
+    {
+      "companionPath": "dist/kjv/books.js",
+      "nativePath": "scripts/lib/books.mjs",
+      "kind": "generated",
+      "why": "Canonical book ids, names, testament and order.",
+      "sourceSha256": "fab1aa3ab2f93bb2071d5102ad7e1a3c53e172245598e392ac252cbcec84ca5b",
+      "sha256": "c3e6a823e0c942a88e382de23d462e2621a147fede7d36b9c37b3bed2e78d437"
+    },
+    {
+      "companionPath": "dist/kjv/versification.js",
+      "nativePath": "src/data/kjv/versification.json",
+      "kind": "generated",
+      "why": "Verse counts per chapter; every reference is checked against these.",
+      "sourceSha256": "16180c9918863b6016f32c7736c68c550853d8df9db81bb48111b31a21e231f9",
+      "sha256": "07875ec5f4ed92ddd2cfe78db53bcb7935f3047d078a193d532edc37659683bb"
+    },
+    {
+      "companionPath": "dist/kjv/genesis.js",
+      "nativePath": "src/data/kjv/genesis.json",
+      "kind": "generated",
+      "why": "King James text of Genesis, loaded on demand.",
+      "sourceSha256": "e46a7f7c9c8f42a59715c6dcf93cb63fe459fed289f4406078d4cdb92d6a6632",
+      "sha256": "f1c6a84a6fe3a56e28d75f2487bc27d3f36f533cc3ac1207adbff814f7f50299"
+    },
+    {
+      "companionPath": "dist/kjv/exodus.js",
+      "nativePath": "src/data/kjv/exodus.json",
+      "kind": "generated",
+      "why": "King James text of Exodus, loaded on demand.",
+      "sourceSha256": "67316dff5bd37bd1b4d5ce1eea6917ddbf9ced5823a3ec3ea94daf1b6331bb97",
+      "sha256": "37b1ddae26cabd9879ad115d1edb9607b2377b5099567247fac5a513bb235486"
+    },
+    {
+      "companionPath": "dist/kjv/leviticus.js",
+      "nativePath": "src/data/kjv/leviticus.json",
+      "kind": "generated",
+      "why": "King James text of Leviticus, loaded on demand.",
+      "sourceSha256": "a2c0afbfaf1e380f0c3315e2b2f9154366994136f1de824df3723651d1376bc9",
+      "sha256": "0b725518b3e6a87e3bbcd761a6a00366a0dda88f25c190111f212bec5834ca03"
+    },
+    {
+      "companionPath": "dist/kjv/numbers.js",
+      "nativePath": "src/data/kjv/numbers.json",
+      "kind": "generated",
+      "why": "King James text of Numbers, loaded on demand.",
+      "sourceSha256": "69e26530f4dce4fecacd20f72f069e489599ba2601aa6d0acb677d2193e5b7d0",
+      "sha256": "a6e0ffad568da58121102bcea38d47e28dc274a961b960781cabbea9cd3fb948"
+    },
+    {
+      "companionPath": "dist/kjv/deuteronomy.js",
+      "nativePath": "src/data/kjv/deuteronomy.json",
+      "kind": "generated",
+      "why": "King James text of Deuteronomy, loaded on demand.",
+      "sourceSha256": "0234ac37ca9ad39e75521aecebdd978b70ccb7ec805e3cbbe1b9aa83a177f703",
+      "sha256": "9564063f71a117e6cd0588e38fdd84a611b2e1014d6fc3e8dbd6aadc3f6e5b36"
+    },
+    {
+      "companionPath": "dist/kjv/joshua.js",
+      "nativePath": "src/data/kjv/joshua.json",
+      "kind": "generated",
+      "why": "King James text of Joshua, loaded on demand.",
+      "sourceSha256": "9fb7100116ca705d9ab26eb0bb450d71fa15578d9d68766b1373800fb707fee4",
+      "sha256": "d17d148cd3740851c22775f6ba0ccaa1ad895da82892e820a94ccc1b88a4e01d"
+    },
+    {
+      "companionPath": "dist/kjv/judges.js",
+      "nativePath": "src/data/kjv/judges.json",
+      "kind": "generated",
+      "why": "King James text of Judges, loaded on demand.",
+      "sourceSha256": "27c0f7a194767998715ea429cd4a0e23bc9ad6f16e589574fe35d2ab2d0bf930",
+      "sha256": "8b965ea1fa39c06f8aaa09e708ee6079582e1916f086b1bef6aa877cdd86a517"
+    },
+    {
+      "companionPath": "dist/kjv/ruth.js",
+      "nativePath": "src/data/kjv/ruth.json",
+      "kind": "generated",
+      "why": "King James text of Ruth, loaded on demand.",
+      "sourceSha256": "a54803581e2d9e2dae1f76972523570a129c6c87f91888d414920244709c8a7f",
+      "sha256": "910d06a8e65abef1741e4cfe2816a122593146fe32db238c8a43d8a6bd5657fb"
+    },
+    {
+      "companionPath": "dist/kjv/1-samuel.js",
+      "nativePath": "src/data/kjv/1-samuel.json",
+      "kind": "generated",
+      "why": "King James text of 1 Samuel, loaded on demand.",
+      "sourceSha256": "5885134eba7cc9e2b8b651ab71ce12748866c5a486a247d037ce31769d295bd0",
+      "sha256": "9615732808d271ff57a9e815c43e4f14f5f8702ebd39bc9f1b82d5cec1ba3f00"
+    },
+    {
+      "companionPath": "dist/kjv/2-samuel.js",
+      "nativePath": "src/data/kjv/2-samuel.json",
+      "kind": "generated",
+      "why": "King James text of 2 Samuel, loaded on demand.",
+      "sourceSha256": "cec165dbb51d75e19939795e0c4fef7cf6c3dc32a47939b7e1eb788a48f1f2a3",
+      "sha256": "a34e341aed6cfbeb295210c20f06391b6879e083f259b158fbda15e7da946f48"
+    },
+    {
+      "companionPath": "dist/kjv/1-kings.js",
+      "nativePath": "src/data/kjv/1-kings.json",
+      "kind": "generated",
+      "why": "King James text of 1 Kings, loaded on demand.",
+      "sourceSha256": "d77beca56b7acb3415a5c83738f1855ac37e20df266ffe213907f8e0e2908870",
+      "sha256": "006e4c584ae3f35af0525af2e058e3af8f66ea3041d1a3beaaeee1c4982aa616"
+    },
+    {
+      "companionPath": "dist/kjv/2-kings.js",
+      "nativePath": "src/data/kjv/2-kings.json",
+      "kind": "generated",
+      "why": "King James text of 2 Kings, loaded on demand.",
+      "sourceSha256": "470c712b60f79401457becfadcaf0710f7681032453b081db5ec323b8eacb206",
+      "sha256": "800f7addf387e527fa906c09d44d53d8fbe151d26e8f194fa1315ad4a8efb977"
+    },
+    {
+      "companionPath": "dist/kjv/1-chronicles.js",
+      "nativePath": "src/data/kjv/1-chronicles.json",
+      "kind": "generated",
+      "why": "King James text of 1 Chronicles, loaded on demand.",
+      "sourceSha256": "cde960db3e800814ebc1f2b107ce0ed61fa1d67866bcb22644221080cb88a463",
+      "sha256": "31f7158415b358c26c30ba99f0122b5bd51f6f01dc27c417b500e75d911ad7a8"
+    },
+    {
+      "companionPath": "dist/kjv/2-chronicles.js",
+      "nativePath": "src/data/kjv/2-chronicles.json",
+      "kind": "generated",
+      "why": "King James text of 2 Chronicles, loaded on demand.",
+      "sourceSha256": "58c931fa0dcf25b2fc666ececee2b4d8b67190ac214e6ab1b6ab1d7a05641661",
+      "sha256": "722b4139f86dea30ef7b3ca91bda9e5b01f539491b120efc22a01af1e62a9cd3"
+    },
+    {
+      "companionPath": "dist/kjv/ezra.js",
+      "nativePath": "src/data/kjv/ezra.json",
+      "kind": "generated",
+      "why": "King James text of Ezra, loaded on demand.",
+      "sourceSha256": "03d6c3c658b5b93655e8b127de689b724caa8f5640c81fb6f3812cb97640e996",
+      "sha256": "c0418a34671090cf237edde0cd8b34c0cc98904ea12994f28af957ceb7676fad"
+    },
+    {
+      "companionPath": "dist/kjv/nehemiah.js",
+      "nativePath": "src/data/kjv/nehemiah.json",
+      "kind": "generated",
+      "why": "King James text of Nehemiah, loaded on demand.",
+      "sourceSha256": "ad8e2a149c9c0a181cbcc1dc3c1029b7b4f0d380115f446cead26e5e090604c0",
+      "sha256": "3ccbfe28539aebb2a0d881c9df672c33d5e59c7405423353c098c8a713cb80cd"
+    },
+    {
+      "companionPath": "dist/kjv/esther.js",
+      "nativePath": "src/data/kjv/esther.json",
+      "kind": "generated",
+      "why": "King James text of Esther, loaded on demand.",
+      "sourceSha256": "ad3e8d66922e070c12d65288e902f74dbaddda563e3cbe9ee3a00af0709c941c",
+      "sha256": "72284d46247a02e59cfac2f6be413f7d2ef82b7f44e79de49bea9c73d8042a2a"
+    },
+    {
+      "companionPath": "dist/kjv/job.js",
+      "nativePath": "src/data/kjv/job.json",
+      "kind": "generated",
+      "why": "King James text of Job, loaded on demand.",
+      "sourceSha256": "623ef056a5534ce9dede85787ce9d84034564bedbd2117fb925b988cb1610744",
+      "sha256": "293798c3d7faf63d641c7318c5029e8ad2b89ee0423d681a1321bd9103699e8a"
+    },
+    {
+      "companionPath": "dist/kjv/psalms.js",
+      "nativePath": "src/data/kjv/psalms.json",
+      "kind": "generated",
+      "why": "King James text of Psalms, loaded on demand.",
+      "sourceSha256": "4dd722bd551cb1d879de10289da7ddd37ebd90061142a53712d845d4e8592068",
+      "sha256": "b44f7b6cbf42a71e96916cbd1026dc3323fb08104168ef42a0918e01e553f2ad"
+    },
+    {
+      "companionPath": "dist/kjv/proverbs.js",
+      "nativePath": "src/data/kjv/proverbs.json",
+      "kind": "generated",
+      "why": "King James text of Proverbs, loaded on demand.",
+      "sourceSha256": "c2ea1e32bab3bf5b25cd9a1569603d1ec42bfea93412c507243e5b6b6c6fd25c",
+      "sha256": "ec91128f987b746fa3bc38d5c5990b4cc0db7916be36fd778eedd367e9a567a9"
+    },
+    {
+      "companionPath": "dist/kjv/ecclesiastes.js",
+      "nativePath": "src/data/kjv/ecclesiastes.json",
+      "kind": "generated",
+      "why": "King James text of Ecclesiastes, loaded on demand.",
+      "sourceSha256": "a3868fec8939df0c7a737837110237776efa9bc34c0ee5d3fcea066ddaea5712",
+      "sha256": "31cdd419f9008ed87ba95954d46d6dc9ca7c2c9bf7960157f4d02eea1d1f40b8"
+    },
+    {
+      "companionPath": "dist/kjv/song-of-solomon.js",
+      "nativePath": "src/data/kjv/song-of-solomon.json",
+      "kind": "generated",
+      "why": "King James text of Song of Solomon, loaded on demand.",
+      "sourceSha256": "82ab69c0d182d62cad6fa1c53f4adef879b5fd6ec7695b69590043965ddcffe8",
+      "sha256": "a5e53391123c7bbecedb9e63f42f0bc565ed4b9095f796561bef0a0b043b0d88"
+    },
+    {
+      "companionPath": "dist/kjv/isaiah.js",
+      "nativePath": "src/data/kjv/isaiah.json",
+      "kind": "generated",
+      "why": "King James text of Isaiah, loaded on demand.",
+      "sourceSha256": "0c0b7584b6b09829400446a678abb300097d7674e6577a79882e522203166dfb",
+      "sha256": "87c167c693110310730fe4ed601a6eed10e3298638f67e61005036f8212223b8"
+    },
+    {
+      "companionPath": "dist/kjv/jeremiah.js",
+      "nativePath": "src/data/kjv/jeremiah.json",
+      "kind": "generated",
+      "why": "King James text of Jeremiah, loaded on demand.",
+      "sourceSha256": "2889500b9a107df955083fe0492fcbbe8ea9fea2360fa14c6dac1c315aaba13c",
+      "sha256": "f0b4f1742b72cbd9b08ed638f55062b2bc4a010f2da44596637d4e37c44d226f"
+    },
+    {
+      "companionPath": "dist/kjv/lamentations.js",
+      "nativePath": "src/data/kjv/lamentations.json",
+      "kind": "generated",
+      "why": "King James text of Lamentations, loaded on demand.",
+      "sourceSha256": "35ed9df32ace275b43b7b8664369b8326c986eca158bc43ac03e14d7cae5c4cc",
+      "sha256": "8475496a6119e4e6a281e755802504fa878a56d3884ded3318d918c09c6877cb"
+    },
+    {
+      "companionPath": "dist/kjv/ezekiel.js",
+      "nativePath": "src/data/kjv/ezekiel.json",
+      "kind": "generated",
+      "why": "King James text of Ezekiel, loaded on demand.",
+      "sourceSha256": "3472a7bd6ec8f33928a31b837c8af48e85a4e0f2816184120fdaf369d823532c",
+      "sha256": "902bda88b811ae2b8b48ed914eeff3f42df2aa711a7148732c2b97b1c3805066"
+    },
+    {
+      "companionPath": "dist/kjv/daniel.js",
+      "nativePath": "src/data/kjv/daniel.json",
+      "kind": "generated",
+      "why": "King James text of Daniel, loaded on demand.",
+      "sourceSha256": "bd15eb1c4da19ba0e1ced1e21832f0f46a6c99059db23079120a6b69076d8dc5",
+      "sha256": "6d231bbfcd72901f10f2d0d8cff7c156f7c4771cb38077691c6f54cb46b74641"
+    },
+    {
+      "companionPath": "dist/kjv/hosea.js",
+      "nativePath": "src/data/kjv/hosea.json",
+      "kind": "generated",
+      "why": "King James text of Hosea, loaded on demand.",
+      "sourceSha256": "3232be632d9c763318b91cd4edfc86a0f0d22efe70b1476c2753aaecf74e358c",
+      "sha256": "40ef6a58704590580276d238d47ad9866c2dc004546311d8890e029ec2949da6"
+    },
+    {
+      "companionPath": "dist/kjv/joel.js",
+      "nativePath": "src/data/kjv/joel.json",
+      "kind": "generated",
+      "why": "King James text of Joel, loaded on demand.",
+      "sourceSha256": "1f688943dfd97ae02dac07171fc5d7527c4af769d12b0987042f5f04d5b5bb1d",
+      "sha256": "fb69098f7986c19a44be995f7c37e8f17b1bd6c2b9c3e16a8e6ca30851ebe8be"
+    },
+    {
+      "companionPath": "dist/kjv/amos.js",
+      "nativePath": "src/data/kjv/amos.json",
+      "kind": "generated",
+      "why": "King James text of Amos, loaded on demand.",
+      "sourceSha256": "b8f6247dee0d2c853bd3f564edc4369a79b217f69c7ab0a3b064a4d2d6ba2b70",
+      "sha256": "de7d7300d6faa5c075006ec0956fd28975a765393ff70cef9825b8ae245eae07"
+    },
+    {
+      "companionPath": "dist/kjv/obadiah.js",
+      "nativePath": "src/data/kjv/obadiah.json",
+      "kind": "generated",
+      "why": "King James text of Obadiah, loaded on demand.",
+      "sourceSha256": "43fa58cd1fc6b89d77367001d92abe9de745b6879f3abbae6a42a11331eb4f23",
+      "sha256": "f3e5a09dd5c66105b4c4ca2ff9e6f6091ebba5c7bd26c1218bbf5d99ba69bc9e"
+    },
+    {
+      "companionPath": "dist/kjv/jonah.js",
+      "nativePath": "src/data/kjv/jonah.json",
+      "kind": "generated",
+      "why": "King James text of Jonah, loaded on demand.",
+      "sourceSha256": "4792036d76e6f9649db75098dfba0eee39299d20e0a91ae685de20f83706b0cc",
+      "sha256": "f44d8ae8789c51e6a384921550e07404cef58530ec7cdc1834e8c418a18c24b3"
+    },
+    {
+      "companionPath": "dist/kjv/micah.js",
+      "nativePath": "src/data/kjv/micah.json",
+      "kind": "generated",
+      "why": "King James text of Micah, loaded on demand.",
+      "sourceSha256": "01ff7bb3eb35e7bcf3fb771c668bf5dbfc226e6d94c7e4828fe3308d509b2994",
+      "sha256": "f69fa43a07e6f1980845e1bcacc0d3802da30dd0f4c09654434c9cbf6b8bb1fa"
+    },
+    {
+      "companionPath": "dist/kjv/nahum.js",
+      "nativePath": "src/data/kjv/nahum.json",
+      "kind": "generated",
+      "why": "King James text of Nahum, loaded on demand.",
+      "sourceSha256": "850060abef4a85e3bfceb14b6e68d274bae65b36ee152f1a499ab1a87ba395f3",
+      "sha256": "43228cb7b40e44e8a48c6bbc7174a2d9de1fd18b3d116f59de2f9dba88720aca"
+    },
+    {
+      "companionPath": "dist/kjv/habakkuk.js",
+      "nativePath": "src/data/kjv/habakkuk.json",
+      "kind": "generated",
+      "why": "King James text of Habakkuk, loaded on demand.",
+      "sourceSha256": "4fa7495794c80df107ef1e0ff0bb8f6111a9a2e83da8c4c35fc9437f19936e74",
+      "sha256": "9928799f6456b71a36724e473bd9b6a51530fabd37ed2997bc4f50dcc00a79be"
+    },
+    {
+      "companionPath": "dist/kjv/zephaniah.js",
+      "nativePath": "src/data/kjv/zephaniah.json",
+      "kind": "generated",
+      "why": "King James text of Zephaniah, loaded on demand.",
+      "sourceSha256": "4ca18f1f290293b807df6631ca29bc1ec9c8e96951754fc401f74de7c89d1803",
+      "sha256": "fafbe49f3fc28877d7b3b1e35212a286a93c50573eb327fa899c0a7bd3f39acd"
+    },
+    {
+      "companionPath": "dist/kjv/haggai.js",
+      "nativePath": "src/data/kjv/haggai.json",
+      "kind": "generated",
+      "why": "King James text of Haggai, loaded on demand.",
+      "sourceSha256": "8e4a0028f40818dbb2b2f30550d89a3aacd668301d09567f5825fb3b3a9e8d3f",
+      "sha256": "dc1771e9b2db7ef503da9de3552220ec19957f1fac4b115fbcc7b8bf9edac537"
+    },
+    {
+      "companionPath": "dist/kjv/zechariah.js",
+      "nativePath": "src/data/kjv/zechariah.json",
+      "kind": "generated",
+      "why": "King James text of Zechariah, loaded on demand.",
+      "sourceSha256": "e1a59a6bcb5a121ffc60ce7cf8844022343ff26d21a7e4e42b3572510e799181",
+      "sha256": "dc9402fc55195ab21199eaafedc4adbf497c56aa6dccb48cf939fbff38e9c9df"
+    },
+    {
+      "companionPath": "dist/kjv/malachi.js",
+      "nativePath": "src/data/kjv/malachi.json",
+      "kind": "generated",
+      "why": "King James text of Malachi, loaded on demand.",
+      "sourceSha256": "287504da858884ad847e141ecdc168b38cc5c60ddb8c1d42f0f5b5b58315bf37",
+      "sha256": "0992c56c1739c28399d9a4b3d412ed718817c542148ae40d99b600f767eb9dd0"
+    },
+    {
+      "companionPath": "dist/kjv/matthew.js",
+      "nativePath": "src/data/kjv/matthew.json",
+      "kind": "generated",
+      "why": "King James text of Matthew, loaded on demand.",
+      "sourceSha256": "893221a5b0fff8ed0d89b977293309c030afbdb3c23a388edaeafcda0dac67b1",
+      "sha256": "4a6320dc9cddac3fbb746c411a44a94707b4bf7db8f26f6220936146a613dc1f"
+    },
+    {
+      "companionPath": "dist/kjv/mark.js",
+      "nativePath": "src/data/kjv/mark.json",
+      "kind": "generated",
+      "why": "King James text of Mark, loaded on demand.",
+      "sourceSha256": "5a48787d39e67b795fda4a081a6ec3c50f3dfc77fcfd814a3933ac3560b57637",
+      "sha256": "00455a5b765a1a8a078132eaa6505b1eea3e3d97403537c8e15857149aeea806"
+    },
+    {
+      "companionPath": "dist/kjv/luke.js",
+      "nativePath": "src/data/kjv/luke.json",
+      "kind": "generated",
+      "why": "King James text of Luke, loaded on demand.",
+      "sourceSha256": "31d1d6bd112b96ea1a8d285070dd9702857fbd73ced864a2b4e94625b2aa9776",
+      "sha256": "18efdeecdc695646e4761d6e76de8701564b6968acbb937090ec229759fe49d3"
+    },
+    {
+      "companionPath": "dist/kjv/john.js",
+      "nativePath": "src/data/kjv/john.json",
+      "kind": "generated",
+      "why": "King James text of John, loaded on demand.",
+      "sourceSha256": "02382ea9f69a7d21ece82b9042af416694142532c46a570d316f6f82440cb6a3",
+      "sha256": "2737cf500391b4c8d34b6fe9d8c92d8b272a82d4c6ed591ab0f4c01dedff7396"
+    },
+    {
+      "companionPath": "dist/kjv/acts.js",
+      "nativePath": "src/data/kjv/acts.json",
+      "kind": "generated",
+      "why": "King James text of Acts, loaded on demand.",
+      "sourceSha256": "cabcb2517ac111c7086616428832d9ed803400fd8b758ba437f917f6195871b3",
+      "sha256": "37370120faa1e5c48306c291d9bb678d7da45877cb39fc27f5e06eddc9516c2d"
+    },
+    {
+      "companionPath": "dist/kjv/romans.js",
+      "nativePath": "src/data/kjv/romans.json",
+      "kind": "generated",
+      "why": "King James text of Romans, loaded on demand.",
+      "sourceSha256": "103c204a2a16c36dd41a758aa013678e1cfa1cdec68ef6197e30023570459705",
+      "sha256": "b4b2b695ec886f17b45292397ad006e174eb8857f2c373db87bed9dc11e03eae"
+    },
+    {
+      "companionPath": "dist/kjv/1-corinthians.js",
+      "nativePath": "src/data/kjv/1-corinthians.json",
+      "kind": "generated",
+      "why": "King James text of 1 Corinthians, loaded on demand.",
+      "sourceSha256": "6648f7167b15ee1aa7c890fffcca708cc07f1a9b9e29a217fcd56b80fe9f67d5",
+      "sha256": "2e9c2bcee3434f74b7f31244957b1e9c53f957f99f93af90f624a02685135465"
+    },
+    {
+      "companionPath": "dist/kjv/2-corinthians.js",
+      "nativePath": "src/data/kjv/2-corinthians.json",
+      "kind": "generated",
+      "why": "King James text of 2 Corinthians, loaded on demand.",
+      "sourceSha256": "0f71116cf1158a5b73bc5300b9dd07310673257afec6af49073c3057c4848a7f",
+      "sha256": "b6fb0c89252d88a85fad9a97793688e08df9c520688dc91ac4f5873d3857d0ae"
+    },
+    {
+      "companionPath": "dist/kjv/galatians.js",
+      "nativePath": "src/data/kjv/galatians.json",
+      "kind": "generated",
+      "why": "King James text of Galatians, loaded on demand.",
+      "sourceSha256": "8dd6b20f52b87feaebc68d6d9569f866d365fbcf0c3ac030ca9b2951d8d3f7c8",
+      "sha256": "b99eddae1ba2804cb33d80eed2eca79a77c4d65626f69dcaf373705e4456ff9a"
+    },
+    {
+      "companionPath": "dist/kjv/ephesians.js",
+      "nativePath": "src/data/kjv/ephesians.json",
+      "kind": "generated",
+      "why": "King James text of Ephesians, loaded on demand.",
+      "sourceSha256": "2d69aa4b8ce9ce7e98b4d2297089480829fcc79c21415ff8b87ed4756bc3e95c",
+      "sha256": "3f6386f7bcf10f2c091d561665f146aba5a1b29b48b2678fc59341d35745b220"
+    },
+    {
+      "companionPath": "dist/kjv/philippians.js",
+      "nativePath": "src/data/kjv/philippians.json",
+      "kind": "generated",
+      "why": "King James text of Philippians, loaded on demand.",
+      "sourceSha256": "b350015822346174938f3c2da3365cc92ede49006888baad2eb018f04b1f10c2",
+      "sha256": "a4b73f6821d6638499b46d290fa60ac3fc132f7473cdd5ab5cba1d1d684e9850"
+    },
+    {
+      "companionPath": "dist/kjv/colossians.js",
+      "nativePath": "src/data/kjv/colossians.json",
+      "kind": "generated",
+      "why": "King James text of Colossians, loaded on demand.",
+      "sourceSha256": "c1787f87409c07bee577adea88aff5ffee6ecdba191fcd8b4615c3bfc6fc0608",
+      "sha256": "7afb6a13dd7731df9b41ef2930c01a1868a455a859d54fe0667f3f069d11e95a"
+    },
+    {
+      "companionPath": "dist/kjv/1-thessalonians.js",
+      "nativePath": "src/data/kjv/1-thessalonians.json",
+      "kind": "generated",
+      "why": "King James text of 1 Thessalonians, loaded on demand.",
+      "sourceSha256": "b18a4902af252d37d3872fd7b5fa998cf1e1e88523667712ead7488ab05e0aa5",
+      "sha256": "415860e5214d8788db36e615b89ee5cf702f3f4d69e8f95b50d18d6425984c0a"
+    },
+    {
+      "companionPath": "dist/kjv/2-thessalonians.js",
+      "nativePath": "src/data/kjv/2-thessalonians.json",
+      "kind": "generated",
+      "why": "King James text of 2 Thessalonians, loaded on demand.",
+      "sourceSha256": "8c82738d1e9e4c3f78983a02222062c013dca8cd4f0fa86126c99153e0016c3b",
+      "sha256": "fb28c2fbbd38f671aced73178349cfb560d4abd8ee23dbbf1e5f9e392f3a3bf6"
+    },
+    {
+      "companionPath": "dist/kjv/1-timothy.js",
+      "nativePath": "src/data/kjv/1-timothy.json",
+      "kind": "generated",
+      "why": "King James text of 1 Timothy, loaded on demand.",
+      "sourceSha256": "f60553785de136759d699d399ef4b3d3e1207d947934898ccbb79c9bba7fd61a",
+      "sha256": "66e0154ad23321eca95efba6c8b5233d7d90333396220158de510e105a3adbb9"
+    },
+    {
+      "companionPath": "dist/kjv/2-timothy.js",
+      "nativePath": "src/data/kjv/2-timothy.json",
+      "kind": "generated",
+      "why": "King James text of 2 Timothy, loaded on demand.",
+      "sourceSha256": "d73b76099d6cea6b56cbcb2ec2d23b9c549b11bbad34274666aba594e9ec7350",
+      "sha256": "60234215b064f0d7b831d262027afffc1e7d38b8d7b8f025d27bd777576861ce"
+    },
+    {
+      "companionPath": "dist/kjv/titus.js",
+      "nativePath": "src/data/kjv/titus.json",
+      "kind": "generated",
+      "why": "King James text of Titus, loaded on demand.",
+      "sourceSha256": "8e44e9c73c8982dba6c8b15dbfcde19fbbacb5454a357e17337428e8eeae64bf",
+      "sha256": "cea68052a12d51fa1d39b12bfa13b474de81e0a21936f86a75f5d13741b994c4"
+    },
+    {
+      "companionPath": "dist/kjv/philemon.js",
+      "nativePath": "src/data/kjv/philemon.json",
+      "kind": "generated",
+      "why": "King James text of Philemon, loaded on demand.",
+      "sourceSha256": "917cf2708a475f214399c9e9025fefd44deb7aa3546d79d9302a5658e970bac2",
+      "sha256": "bbce331e1c7167b8e40dd8282ed46b84d9f2372747a886e047039fb8fd831712"
+    },
+    {
+      "companionPath": "dist/kjv/hebrews.js",
+      "nativePath": "src/data/kjv/hebrews.json",
+      "kind": "generated",
+      "why": "King James text of Hebrews, loaded on demand.",
+      "sourceSha256": "c45269d709e9347776a0a3d0be4dd2590885d9f05a4bb1d11b3b0f53175e4da2",
+      "sha256": "cdcf8c3969e12d9951649fd659806c994f9c5f6f00c5089cecd77e704bfda5a6"
+    },
+    {
+      "companionPath": "dist/kjv/james.js",
+      "nativePath": "src/data/kjv/james.json",
+      "kind": "generated",
+      "why": "King James text of James, loaded on demand.",
+      "sourceSha256": "6a0b752507791a404c5e8609f1dd10035f4aef9044b7a29e1b68ce288c1b4dcf",
+      "sha256": "68311597ad164fe1a4210a7e4dbea6043e34d0ff787e0bbc0a5b14e62518b5e8"
+    },
+    {
+      "companionPath": "dist/kjv/1-peter.js",
+      "nativePath": "src/data/kjv/1-peter.json",
+      "kind": "generated",
+      "why": "King James text of 1 Peter, loaded on demand.",
+      "sourceSha256": "ba3207861b3dd2438ca8032a3455843632a5b9570727f831d97dbcc95d6e6847",
+      "sha256": "f1e09a75a3b833581a784007a0e4985728959b72f0d68c49aba28f35a3a44b5e"
+    },
+    {
+      "companionPath": "dist/kjv/2-peter.js",
+      "nativePath": "src/data/kjv/2-peter.json",
+      "kind": "generated",
+      "why": "King James text of 2 Peter, loaded on demand.",
+      "sourceSha256": "2bcee4df717368dc9297ebbe6e862d98bafb8ca2e2863afccbd7715751cf4af1",
+      "sha256": "b18300b762dfc3a2e429e5592f9e99639b54f1ee8878395487c799ef183d02b4"
+    },
+    {
+      "companionPath": "dist/kjv/1-john.js",
+      "nativePath": "src/data/kjv/1-john.json",
+      "kind": "generated",
+      "why": "King James text of 1 John, loaded on demand.",
+      "sourceSha256": "a0ce0f0794409f8fc9f238f83667b51451e35b84609800e5a9b6bc42c6a27062",
+      "sha256": "74732589c53298f64a9a516455e414fafe4f8a3241cc9c2da474f7ebfe5d0c5d"
+    },
+    {
+      "companionPath": "dist/kjv/2-john.js",
+      "nativePath": "src/data/kjv/2-john.json",
+      "kind": "generated",
+      "why": "King James text of 2 John, loaded on demand.",
+      "sourceSha256": "6376528b07e1686c60b4d0ca7320e273f7b0412e59b6c686d308d904fade4d13",
+      "sha256": "7075ebf37065db31f9b9a7bffafa3f8cd8778bbc8f70925e9626651378c820d9"
+    },
+    {
+      "companionPath": "dist/kjv/3-john.js",
+      "nativePath": "src/data/kjv/3-john.json",
+      "kind": "generated",
+      "why": "King James text of 3 John, loaded on demand.",
+      "sourceSha256": "ccd3bca9f47a6f5f7762b94457a62cd615b56c69654147312b819571e6983b21",
+      "sha256": "167893fa9385e4b721143d6ea38ad96198f97347d88ebdcb0864607d42854d21"
+    },
+    {
+      "companionPath": "dist/kjv/jude.js",
+      "nativePath": "src/data/kjv/jude.json",
+      "kind": "generated",
+      "why": "King James text of Jude, loaded on demand.",
+      "sourceSha256": "59cf674e34f3e50b9b4ae798d4c8409d69c052f721089f532fb10e62d09530b4",
+      "sha256": "35a9cde2ecb4db7e552ed9484d1fe5f823f0499e5ec08a96fd755394ffc99baa"
+    },
+    {
+      "companionPath": "dist/kjv/revelation.js",
+      "nativePath": "src/data/kjv/revelation.json",
+      "kind": "generated",
+      "why": "King James text of Revelation, loaded on demand.",
+      "sourceSha256": "65c2b4f13077e1e4d000703cff3354dd0bf69fce7086f615e5bd96fe656017b5",
+      "sha256": "bd12e42c29d5dde9ca01802119ac83bdf80911f28e7d96c833108627b6d2d4ab"
+    },
+    {
+      "companionPath": "dist/topics.js",
+      "nativePath": "src/data/topics.json",
+      "kind": "generated",
+      "why": "The life topics and the passages they point at, written for this project.",
+      "sourceSha256": "3112cdb2929e8c2d7bfc19ee25c9b4d293009471f9aa576592b3269967a0df1c",
+      "sha256": "75e29e2cd7870513ac7c0100656eab425751209311acaa472af61b4b018cf348"
+    },
+    {
+      "companionPath": "dist/kjv/SOURCE.md",
+      "nativePath": "src/data/kjv/SOURCE.md",
+      "kind": "generated",
+      "why": "KJV provenance and the copyright note, kept beside the text it describes.",
+      "sourceSha256": "1a7b45b0fadd489863137ad89d6b184827e52130677c078d0480c409527350c4",
+      "sha256": "1d604bcb8e8b5bd292c3f86ad7af7ddf350a4104c1a5dc8181905010f6aec4c1"
     }
-  ]
+  ],
+  "dataSourceSha": "33e0204675e69bf06a78095934631ebd503a8392",
+  "dataSyncedOn": "2026-11-09"
 }

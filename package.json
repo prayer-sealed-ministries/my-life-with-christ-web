@@ -8,7 +8,8 @@
     "test:browser": "node tests/browser-qa.mjs",
     "validate:artifact": "node scripts/validate-artifact.mjs",
     "verify:app-compat": "node scripts/verify-app-compat.mjs",
-    "check:native-drift": "node scripts/check-native-drift.mjs"
+    "check:native-drift": "node scripts/check-native-drift.mjs",
+    "sync:app-data": "node scripts/sync-app-data.mjs"
   },
   "dependencies": {
     "qrcode-generator": "2.0.4"

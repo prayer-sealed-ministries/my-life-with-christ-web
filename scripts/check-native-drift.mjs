@@ -117,11 +117,14 @@ async function main() {
     }
     compared += 1;
     const actual = createHash('sha256').update(got.body).digest('hex');
-    if (actual !== file.sha256) {
+    // A generated module records the native bytes it was made from separately
+    // from its own bytes; the native side is the one to compare here.
+    const recorded = file.sourceSha256 ?? file.sha256;
+    if (actual !== recorded) {
       drifted.push({
         path: file.nativePath,
         companionPath: file.companionPath,
-        recorded: file.sha256,
+        recorded,
         actual,
         reason: 'content changed',
       });
@@ -151,7 +154,7 @@ async function main() {
     }
     console.error('\nWhat to do, in this order:');
     console.error('  1. Read the native diff above. Decide what changed behaviourally.');
-    console.error('  2. Re-sync compat/, update compat/SOURCE.json, and run npm test.');
+    console.error('  2. Re-sync compat/ (npm run sync:app-data for generated data), update compat/SOURCE.json, and run npm test.');
     console.error('  3. Expect companion tests to fail if the contract really moved —');
     console.error('     that failure is the point, and the last one was a live defect.');
     console.error('  Nothing is copied automatically, and nothing here is auto-merged.');
