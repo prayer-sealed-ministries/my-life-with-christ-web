@@ -18,6 +18,8 @@ they ship, start here and export your journal to carry it into the app.
 - Five entry kinds: sermon, Bible reading, prayer, reflection, letter.
 - IndexedDB drafts, saved entries, local search, and explicit export.
 - Separate provided notes, personal notes, reflection and prayer.
+- A main Scripture on each entry, a sermon link with a note of what it pointed to, and any number of reference notes, one per passage the message turned to. The main passage and every reference go into the app's own `scriptureRefs`; the per-reference notes ride under `_unmigrated.companionScripture`, which the app preserves verbatim (see docs/transfer-format.md).
+- Provided notes can be brought into the entry being written from a Sermon Pack, a `.txt` or `.md` file, or pasted straight in. Pasted notes are recorded with the filename `Pasted notes`, the way the app records a scanned page.
 - Version 1 `journey-export` JSON downloads, compatible with the existing app importer.
 - JSON and checked ZIP journal imports, with review before saving. Identical entries are skipped; changed entries can be retained as separate copies.
 - Guided transfer with separate entry/draft selection, inclusive date ranges, complete content review, and plain JSON or locally encrypted `.lwc` files.

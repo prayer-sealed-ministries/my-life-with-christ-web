@@ -104,3 +104,28 @@ dialog .selection-list { max-height: none; overflow: visible; }
 .field input::placeholder,
 .field textarea::placeholder,
 .search-input::placeholder { color: var(--muted); opacity: 1; }
+
+/* Main Scripture, the sermon link, reference notes, and provided notes brought in
+   from a file or the clipboard. Surfaces reuse colours the contrast checks already
+   cover: the dropzone fill for empty states, the provided-notes tint for quoted text. */
+.writing-sheet h2.sheet-heading { font-size: 19px; margin-bottom: 6px; }
+.provided h2.sheet-heading { margin-bottom: 2px; }
+.provided small { display: block; margin-bottom: 10px; }
+.provided .actions { margin-top: 12px; }
+.provided-empty { border: 1px dashed #a7b699; border-radius: 6px; padding: 16px 19px; background: #f9faf4; margin-bottom: 24px; }
+.provided-empty p { margin-bottom: 12px; }
+.paste-panel { border: 1px solid var(--line); border-radius: 6px; padding: 16px 19px 6px; background: #f9faf4; margin: -10px 0 24px; }
+.paste-panel .actions { margin-bottom: 14px; }
+.reference-notes { margin: 4px 0 26px; }
+.reference-notes > .small-note { margin-bottom: 12px; }
+.reference-row { border: 1px solid var(--line); border-radius: 6px; padding: 10px 16px 14px; margin: 0 0 12px; min-width: 0; }
+.reference-row legend { font-size: 12px; font-weight: 600; color: var(--ink); padding: 0 6px; }
+.reference-row .field { margin-bottom: 12px; }
+.field textarea.short { min-height: 84px; }
+#no-references { margin-bottom: 12px; }
+.main-scripture { font: 19px/1.5 var(--serif); color: var(--ink); margin-bottom: 22px; }
+.main-scripture .eyebrow { display: block; margin-bottom: 4px; }
+.reference-note { margin-bottom: 16px; }
+.reference-note strong { display: block; font: 17px var(--serif); color: var(--ink); margin-bottom: 4px; }
+.reference-note .detail-body { font-size: 15px; }
+.detail-section a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
