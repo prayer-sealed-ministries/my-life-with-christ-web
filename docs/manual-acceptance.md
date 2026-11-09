@@ -38,6 +38,20 @@ Suggested pilot roles (do not contact or enroll people automatically): one pasto
 
 Pilot acceptance: no data loss, unexpected private-field inclusion, silent replacement, misleading receipt, unsupported native-capability claim or unexpected runtime upload. A failed step blocks the affected release claim.
 
+## Editor: main Scripture, reference notes, the sermon link, provided notes
+
+Added 8 November 2026. Source and jsdom tests cover these (`tests/sermon-editor.test.mjs`, `tests/scripture-contract.test.mjs`); none of the following has been seen in a real browser or on a device.
+
+- [ ] Write a sermon with a main Scripture, a sermon link and its description, and three reference notes. Reload mid-way and resume the draft: every row, the link and the main passage come back as typed, in order.
+- [ ] Remove the middle reference. The remaining rows renumber, keyboard focus lands on a row or on “Add a reference”, and the screen reader hears the removal.
+- [ ] Press Enter inside a reference field: focus moves to its note and the entry is not saved. Press Enter in the title: the entry saves, as before.
+- [ ] Type a link without `https://`. The save is refused with the sentence that says what to do, the draft keeps the text, and nothing is written to saved entries. Follow a saved link from the read view; a `javascript:` address is shown as text and is not clickable.
+- [ ] Paste a church outline with the “Paste notes” panel, naming the church. It appears under Provided notes with “Pasted in” and the church name; My notes, reflection and prayer are untouched. Replace it by pasting again and by choosing a file; each asks first. Remove it; the reader's own writing is unchanged and the saved entry carries no provided block.
+- [ ] Choose a `.md` file and then a Sermon Pack inside the editor. The pack seeds speaker, place, date and main Scripture only where those fields were empty, and never overwrites a title already written. A journal file chosen by mistake is refused with a sentence and the entry is unchanged.
+- [ ] Move such an entry to the native app and back. The app shows the main passage and every reference under its own references; the import preview shows no warnings; after the return trip the companion shows each reference note with its text intact.
+- [ ] Readable copy: the main Scripture, link and reference notes appear with My notes; reflection and prayer still need their own choice.
+- [ ] 320 CSS px width and 200% text: reference rows, the paste panel and the provided-notes actions wrap without horizontal scrolling. Screen reader: the two `h2` headings inside the form (“Provided notes…” and “Reference notes”) read in order after the page heading.
+
 ## Integrity and interrupted flows
 
 - [ ] Wrong password, altered ciphertext, malformed/noncanonical Base64, unsupported protected version/parameters, truncated file and oversized input fail without saving partial content. A retry with the valid file still works.
