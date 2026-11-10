@@ -52,6 +52,18 @@ Added 8 November 2026. Source and jsdom tests cover these (`tests/sermon-editor.
 - [ ] Readable copy: the main Scripture, link and reference notes appear with My notes; reflection and prayer still need their own choice.
 - [ ] 320 CSS px width and 200% text: reference rows, the paste panel and the provided-notes actions wrap without horizontal scrolling. Screen reader: the two `h2` headings inside the form (“Provided notes…” and “Reference notes”) read in order after the page heading.
 
+## Topics and the King James text
+
+Added 9 November 2026. Source and jsdom tests cover these (`tests/topics.test.mjs`, `tests/scripture-data.test.mjs`), and the rendered-browser harness proves the text loads under the Content Security Policy in headless Chromium. Nothing below has been seen by a person in a real browser or on a device.
+
+- [ ] Topics page: all 40 topics listed; typing “worry” leaves Anxiety and says it matched that word; the count line is announced by a screen reader when it changes.
+- [ ] A topic page: every passage shows its reference, its one-line note and its verses; the status line reaches “All N passages loaded”; a slow connection shows “Loading the passage…” in each card rather than a blank. Verse numbers start at the reference, not at 1.
+- [ ] “Write about Grief” opens a new entry with Grief already attached; adding, removing and saving topics round-trips; the saved entry shows topic chips that lead back to the topic page; the topic page lists the entry.
+- [ ] Search “husband” finds an entry filed under Marriage.
+- [ ] Move such an entry to the native app: its topic appears there as a topic anchor with no import warning.
+- [ ] 320 CSS px and 200% text: passage cards and chips wrap without horizontal scrolling. Screen reader: h1, then “Passages”, then each reference as a heading, then “Your entries on this topic”.
+- [ ] The attribution line naming the King James Version and the United Kingdom note is visible on every topic page and on Storage & backups.
+
 ## Integrity and interrupted flows
 
 - [ ] Wrong password, altered ciphertext, malformed/noncanonical Base64, unsupported protected version/parameters, truncated file and oversized input fail without saving partial content. A retry with the valid file still works.

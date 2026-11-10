@@ -129,3 +129,34 @@ dialog .selection-list { max-height: none; overflow: visible; }
 .reference-note strong { display: block; font: 17px var(--serif); color: var(--ink); margin-bottom: 4px; }
 .reference-note .detail-body { font-size: 15px; }
 .detail-section a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
+
+/* Topics and the King James text. Cards reuse the start-card surface; verses
+   sit on the writing-sheet surface at reading size. */
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 22px; }
+.topic-card { border: 1px solid var(--line); background: var(--white); padding: 21px 22px 18px; border-radius: 7px; display: flex; flex-direction: column; text-decoration: none; min-width: 0; min-height: 44px; }
+.topic-card:hover { border-color: #9ba992; background: #fdfdf8; }
+.topic-card h2 { font: 21px var(--serif); margin: 0 0 7px; }
+.topic-card p { font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0 0 12px; }
+.topic-card small { font-size: 11px; color: var(--muted); margin-top: auto; }
+.topic-card small b { color: #4a634f; font-weight: 600; }
+.passage-list { list-style: none; padding: 0; margin: 18px 0 0; }
+.passage-card { background: var(--white); border: 1px solid var(--line); border-radius: 7px; padding: 22px 26px; margin-bottom: 14px; min-width: 0; }
+.passage-card h3 { font: 20px var(--serif); margin: 0 0 6px; color: var(--ink); }
+.passage-card .why { font-size: 13px; color: var(--muted); margin: 0 0 14px; line-height: 1.7; }
+.verses { font: 16px/1.85 var(--serif); color: var(--body); }
+.verses p { margin: 0 0 6px; }
+.verses sup { font: 10px var(--sans); color: #795d2d; margin-right: 5px; vertical-align: top; line-height: 1; }
+.verses .chapter-mark { display: block; font: 600 10px var(--sans); letter-spacing: 1.6px; text-transform: uppercase; color: #795d2d; margin: 12px 0 6px; }
+.verses .pending, .verses .unavailable { font: 13px var(--sans); color: var(--muted); margin: 0; }
+.attribution { font-size: 11px; color: var(--muted); line-height: 1.75; margin-top: 26px; max-width: 640px; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 20px; }
+.chip-list li { min-width: 0; max-width: 100%; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; max-width: 100%; border: 1px solid var(--control-border); background: var(--white); border-radius: 999px; padding: 5px 12px; font-size: 12px; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+a.chip:hover { background: #edeedf; }
+.chip .remove { border: 0; background: transparent; color: var(--error); font: 600 12px var(--sans); min-width: 44px; min-height: 36px; margin: -5px -12px -5px 0; padding: 0 10px; border-radius: 0 999px 999px 0; cursor: pointer; }
+.chip .remove:hover { background: #f8eee7; }
+.topic-picker { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.topic-picker .field { flex: 1 1 220px; margin-bottom: 0; }
+.entry-topics { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.back-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; text-underline-offset: 4px; }
+@media (max-width: 650px) { .passage-card { padding: 18px; } .verses { font-size: 15px; } }

@@ -34,11 +34,15 @@ const SENTINELS = [
   { needle: 'My Life With Christ', why: 'the product name, in index.html' },
   { needle: "connect-src 'none'", why: 'the Content Security Policy that keeps writing local' },
   { needle: 'lwcReady', why: 'the application bootstrap the browser harness waits on' },
+  { needle: 'In the beginning God created the heaven and the earth.', why: 'the King James text, in kjv/genesis.js' },
+  { needle: 'King James Version', why: 'the Scripture attribution shown beside the text' },
 ];
 
 /** Below these, this is not a real artifact. */
-const MINIMUM_FILES = 10;
-const MINIMUM_BYTES = 100_000;
+// 17 application files plus 66 books, their verse counts, the canon and the topics.
+const MINIMUM_FILES = 80;
+// The King James text alone is about 4.2 MB; an artifact without it is not this site.
+const MINIMUM_BYTES = 4_000_000;
 
 /** Runtime modules the application imports from one another. */
 const REQUIRED_FILES = [
@@ -50,6 +54,13 @@ const REQUIRED_FILES = [
   'transfer.js',
   'envelope-metadata.js',
   'save-queue.js',
+  'scripture.js',
+  'topics.js',
+  'kjv/books.js',
+  'kjv/versification.js',
+  'kjv/genesis.js',
+  'kjv/revelation.js',
+  'kjv/SOURCE.md',
   'style.css',
   'icon.svg',
   'vendor/qrcode.js',

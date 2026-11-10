@@ -19,6 +19,7 @@ they ship, start here and export your journal to carry it into the app.
 - IndexedDB drafts, saved entries, local search, and explicit export.
 - Separate provided notes, personal notes, reflection and prayer.
 - A main Scripture on each entry, a sermon link with a note of what it pointed to, and any number of reference notes, one per passage the message turned to. The main passage and every reference go into the app's own `scriptureRefs`; the per-reference notes ride under `_unmigrated.companionScripture`, which the app preserves verbatim (see docs/transfer-format.md).
+- The app's 40 life topics, each with its passages, a line on why each is there, and the King James text of every passage, loaded one book at a time. Entries can be filed under topics from the editor or started from a topic's page; topic chips show on entries and topic names and aliases are searchable. Data is generated from the app by `npm run sync:app-data` and recorded in `compat/SOURCE.json`.
 - Provided notes can be brought into the entry being written from a Sermon Pack, a `.txt` or `.md` file, or pasted straight in. Pasted notes are recorded with the filename `Pasted notes`, the way the app records a scanned page.
 - Version 1 `journey-export` JSON downloads, compatible with the existing app importer.
 - JSON and checked ZIP journal imports, with review before saving. Identical entries are skipped; changed entries can be retained as separate copies.
@@ -39,6 +40,7 @@ Serve that folder with an HTTPS static host. Development dependencies are only n
 ```sh
 npm ci
 npm test
+NATIVE_REPO=../my-life-with-christ npm run sync:app-data   # regenerate dist/kjv/ and dist/topics.js from the app
 ```
 
 Tests use Node 24, Python 3, jsdom, and fake-indexeddb. The DOM tests are not rendered-browser tests. They exercise writing, draft recovery, saving, journal exports, the church form and QR generation. Core tests check compatibility with the app's actual importer, separate provided/personal content, cryptographic rejection, concurrency, deduplication and ZIP integrity.
@@ -74,7 +76,7 @@ That constraint still matters for any future change of address, so the procedure
 
 No writing is uploaded. A restrictive Content Security Policy disables runtime network connections. Scripts, styles and the QR library are served locally. Hosting access logs remain the host's responsibility.
 
-Never put real journals, user exports, passwords, or church materials without distribution rights in source or fixtures. The bundled Sermon Pack is explicitly fictional example content. The shipped pages contain no full Bible corpus or licensed outlines.
+Never put real journals, user exports, passwords, or church materials without distribution rights in source or fixtures. The bundled Sermon Pack is explicitly fictional example content. The site ships the King James text (`dist/kjv/`, 4.2 MB, one module per book, loaded on demand) and the topic collections written for the app; it carries no licensed outlines. The KJV is public domain in the United States and remains under perpetual Crown letters patent in the United Kingdom, a decision taken knowingly by the owner on 9 November 2026 and recorded in `dist/kjv/SOURCE.md`.
 
 See `docs/IMPLEMENTATION-2026-10-13.md` for current evidence, `docs/manual-acceptance.md` for pending browser/device gates, `docs/transfer-format.md` for the protocol, and `dist/publishing-guide.md` for church publishing. `docs/verification.md` is historical October 7 evidence. See `docs/ACCESSIBILITY-ASSESSMENT.md` for criterion-level source/DOM checks, and `docs/HOSTING-TRANSITION.md` for portable hosting and safe offline/update prerequisites.
 

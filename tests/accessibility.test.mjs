@@ -33,7 +33,7 @@ await w.lwcReady;
 const db = await import('../dist/storage.js');
 
 const longTitle = 'Fictional accessibility title ' + 'UnbrokenTitle'.repeat(40) + ' <img src=x onerror=alert(1)>';
-const entry = {...newEntry('sermon'), title: longTitle, date: '2026-10-11', notes: 'Fictional personal note', reflection: 'Fictional reflection', prayer: 'Fictional prayer', scriptureRefs: ['John 15:1-8', 'Psalm 23'], links: [{url: 'https://example.org/fictional-sermon', capturedTitle: 'Fictional recording', capturedAt: '2026-10-11T12:00:00.000Z'}], _unmigrated: {companionScripture: {main: 'John 15:1-8', references: [{reference: 'Psalm 23', note: 'Fictional reference note'}]}}, sourceMaterial: {format: 'sermon-notes-json', filename: 'fictional-accessibility.json', importedAt: '2026-10-11T12:00:00.000Z', body: 'Fictional provided notes\n' + 'unbroken'.repeat(300), church: 'Fictional Example Church'}};
+const entry = {...newEntry('sermon'), title: longTitle, date: '2026-10-11', notes: 'Fictional personal note', reflection: 'Fictional reflection', prayer: 'Fictional prayer', scriptureRefs: ['John 15:1-8', 'Psalm 23'], anchors: [{kind: 'topic', topicId: 'grief'}, {kind: 'scripture', book: 'john', chapterStart: 15, verseStart: 1, chapterEnd: 15, verseEnd: 8}], links: [{url: 'https://example.org/fictional-sermon', capturedTitle: 'Fictional recording', capturedAt: '2026-10-11T12:00:00.000Z'}], _unmigrated: {companionScripture: {main: 'John 15:1-8', references: [{reference: 'Psalm 23', note: 'Fictional reference note'}]}}, sourceMaterial: {format: 'sermon-notes-json', filename: 'fictional-accessibility.json', importedAt: '2026-10-11T12:00:00.000Z', body: 'Fictional provided notes\n' + 'unbroken'.repeat(300), church: 'Fictional Example Church'}};
 const draft = entryDraft({...newEntry('letter'), title: longTitle, notes: 'Fictional unfinished note'});
 await db.put('entries', entry);
 await db.put('drafts', draft);
@@ -186,7 +186,7 @@ test('route DOM has a language, title, main landmark, named navigation, ordered 
   assert.ok(declaredName(node('nav')));
   assert.ok(node('header'));
   assert.ok(node('footer'));
-  for (const route of ['home', 'journal', 'transfer', 'import', 'church', 'guide', 'privacy', 'format', ...['sermon', 'reading', 'prayer', 'reflection', 'letter'].map(kind => 'write/' + kind), 'write/draft/' + draft.id, 'write/edit/' + entry.id, 'entry/' + entry.id, 'entry/fictional-missing-entry']) {
+  for (const route of ['home', 'journal', 'topics', 'topic/marriage', 'topic/fictional-missing', 'write/topic/marriage', 'transfer', 'import', 'church', 'guide', 'privacy', 'format', ...['sermon', 'reading', 'prayer', 'reflection', 'letter'].map(kind => 'write/' + kind), 'write/draft/' + draft.id, 'write/edit/' + entry.id, 'entry/' + entry.id, 'entry/fictional-missing-entry']) {
     await go('#' + route);
     assert.equal(document.querySelectorAll('main h1').length, 1, route);
     assert.match(document.title, /.+ · My Life With Christ/, route);
