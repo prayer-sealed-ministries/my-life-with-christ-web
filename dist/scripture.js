@@ -152,3 +152,143 @@ export function anchorLabel(anchor) {
 export function topicSearchText(entry) {
   return topicIdsOf(entry).flatMap((id) => { const topic = topicsById.get(id); return topic ? [topic.name, ...(topic.aliases || [])] : [id]; }).join(' ');
 }
+
+// --- the divisions: every book broken into titled passages ------------------
+//
+// Berean Standard Bible section headings, public domain since 30 April 2023,
+// with the book introductions written for the app. About a megabyte, so it is
+// imported only when the Bible is browsed and never on the writing path.
+export const BSB_ATTRIBUTION = 'The Holy Bible, Berean Standard Bible, BSB is produced in cooperation with Bible Hub, Discovery Bible, OpenBible.com, and the Berean Bible Translation Committee. This text of God’s Word has been dedicated to the public domain. Section headings are used here with gratitude; attribution is not required.';
+/** How an uncovered span is described: the headings leave a few verses untitled, and a reader can still write there. */
+export const UNCOVERED_NOTE = 'No section heading — read it and add your own note';
+
+/** A stable, collision-free id for a span the headings leave untitled, as the app forms it. */
+export function spanId(bookId, from, to) {
+  if (from.chapter === to.chapter) return `${bookId}-${from.chapter}-${from.verse}-${to.verse}`;
+  return `${bookId}-${from.chapter}-${from.verse}-${to.chapter}-${to.verse}`;
+}
+/**
+ * Divide a book into a gapless run of segments: the titled passages in order,
+ * with an `uncovered` segment wherever the headings leave a hole, so that every
+ * verse belongs to exactly one segment and every segment can be written about.
+ * Overlapping headings are kept whole rather than truncated. A port of the
+ * app's buildSegments.
+ */
+export function buildSegments(book, verseCounts) {
+  const index = buildIndex(verseCounts);
+  const placed = [];
+  for (const entry of book.entries) { const span = referenceSpan(index, entry); if (span) placed.push({ entry, span }); }
+  placed.sort((a, b) => a.span.start - b.span.start || a.span.end - b.span.end);
+  const segments = [];
+  let cursor = 1;
+  const addUncovered = (start, end) => {
+    const from = fromOrdinal(index, start), to = fromOrdinal(index, end);
+    segments.push({ kind: 'uncovered', id: spanId(book.id, from, to), ref: formatSpan(index, book.name, start, end), chapterStart: from.chapter, verseStart: from.verse, chapterEnd: to.chapter, verseEnd: to.verse });
+  };
+  for (const { entry, span } of placed) {
+    if (span.start > cursor) addUncovered(cursor, span.start - 1);
+    const from = fromOrdinal(index, span.start), to = fromOrdinal(index, span.end);
+    segments.push({ kind: 'outline', id: entry.id, ref: entry.ref, entry, chapterStart: from.chapter, verseStart: from.verse, chapterEnd: to.chapter, verseEnd: to.verse });
+    cursor = Math.max(cursor, span.end + 1);
+  }
+  if (cursor <= index.total) addUncovered(cursor, index.total);
+  return segments;
+}
+/** The portable reference a segment anchors to. */
+export const segmentRef = (segment, bookId) => ({ book: bookId, chapterStart: segment.chapterStart, verseStart: segment.verseStart, chapterEnd: segment.chapterEnd, verseEnd: segment.verseEnd });
+/** The title to show for a segment: the heading's display wording, or the reference for an untitled span. */
+export const segmentTitle = (segment) => segment.kind === 'outline' ? (segment.entry.displayTitle || segment.entry.title || segment.ref) : segment.ref;
+
+let sectionsPromise = null;
+/**
+ * The divisions, built once: the books with their headings and introductions,
+ * and the questions that can only be answered once they are here.
+ */
+export function loadSections() {
+  if (!sectionsPromise) {
+    sectionsPromise = Promise.all([import('./sections.js'), import('./intros.js')]).then(([sections, intros]) => {
+      const introsById = intros.default;
+      const outlineBooks = sections.default.map((book) => ({ ...book, intro: typeof introsById[book.id] === 'string' ? introsById[book.id] : '' }));
+      const outlineBooksById = new Map(outlineBooks.map((book) => [book.id, book]));
+      const cache = new Map();
+      const segmentsForBook = (bookId) => {
+        if (cache.has(bookId)) return cache.get(bookId);
+        const counts = versification[bookId];
+        if (!counts) return [];
+        const book = outlineBooksById.get(bookId);
+        const segments = buildSegments({ id: bookId, name: bookName(bookId), entries: book ? book.entries : [] }, counts);
+        cache.set(bookId, segments);
+        return segments;
+      };
+      const segmentContaining = (bookId, chapter, verse = 1) => segmentsForBook(bookId).find((s) => (chapter > s.chapterStart || (chapter === s.chapterStart && verse >= s.verseStart)) && (chapter < s.chapterEnd || (chapter === s.chapterEnd && verse <= s.verseEnd)));
+      const findSegment = (bookId, segmentId) => segmentsForBook(bookId).find((s) => s.id === segmentId);
+      /**
+       * Where a segment id this edition does not have was pointing. Ids are
+       * `<book>-<numbers>`: the first number is the start chapter, and the
+       * second is the start verse only when there are three or more numbers.
+       * Enough to offer the passage a stale link was reaching for.
+       */
+      const nearestTo = (bookId, segmentId) => {
+        if (!segmentId.startsWith(`${bookId}-`)) return undefined;
+        const parts = segmentId.slice(bookId.length + 1).split('-');
+        if (!parts.length || !parts.every((part) => /^\d+$/.test(part))) return undefined;
+        const numbers = parts.map(Number);
+        return segmentContaining(bookId, numbers[0], parts.length >= 3 ? numbers[1] : 1);
+      };
+      return { outlineBooks, outlineBooksById, entryCountFor: (bookId) => outlineBooksById.get(bookId)?.entries.length ?? 0, introFor: (bookId) => outlineBooksById.get(bookId)?.intro ?? '', segmentsForBook, segmentContaining, findSegment, nearestTo };
+    }).catch((error) => { sectionsPromise = null; throw error; });
+  }
+  return sectionsPromise;
+}
+
+// --- the reverse index: which topics touch a passage ---------------------------
+// Built once from the topics and the verse counts, on first use. Indexed by
+// verse span, so it answers for a BSB heading, an untitled span or a whole
+// chapter alike. A port of the app's topic-index.
+let touchesByBook = null;
+function touches() {
+  if (touchesByBook) return touchesByBook;
+  touchesByBook = new Map();
+  for (const topic of topics) for (const ref of topic.refs) {
+    const counts = versification[ref.book]; if (!counts) continue;
+    const span = referenceSpan(buildIndex(counts), ref); if (!span) continue;
+    if (!touchesByBook.has(ref.book)) touchesByBook.set(ref.book, []);
+    touchesByBook.get(ref.book).push({ topic, ref, span });
+  }
+  return touchesByBook;
+}
+/** Topics whose passages overlap a range, the one that claims most of it first. */
+export function topicsForSpan(book, chapterStart, verseStart, chapterEnd, verseEnd) {
+  const counts = versification[book], rows = touches().get(book);
+  if (!counts || !rows) return [];
+  const target = referenceSpan(buildIndex(counts), { chapterStart, verseStart, chapterEnd, verseEnd });
+  if (!target) return [];
+  const best = new Map();
+  for (const row of rows) {
+    const start = Math.max(row.span.start, target.start), end = Math.min(row.span.end, target.end);
+    if (start > end) continue;
+    const overlap = end - start + 1, existing = best.get(row.topic.id);
+    if (!existing || overlap > existing.overlap) best.set(row.topic.id, { touch: { topic: row.topic, ref: row.ref }, overlap });
+  }
+  return [...best.values()].sort((a, b) => b.overlap - a.overlap || a.touch.topic.name.localeCompare(b.touch.topic.name)).map((row) => row.touch);
+}
+/** Every topic that touches any part of a book, with how many of its passages are here. */
+export function topicsForBook(book) {
+  const rows = touches().get(book);
+  if (!rows) return [];
+  const counts = new Map();
+  for (const row of rows) { const existing = counts.get(row.topic.id); if (existing) existing.passages += 1; else counts.set(row.topic.id, { topic: row.topic, passages: 1, firstRef: row.ref }); }
+  return [...counts.values()].sort((a, b) => b.passages - a.passages || a.topic.name.localeCompare(b.topic.name));
+}
+
+// --- entries on a passage ----------------------------------------------------------
+/** Does a scripture anchor share at least one verse with a reference? Flat (chapter, verse) positions, so a range across chapters needs no special case. */
+export function anchorOverlaps(anchor, ref) {
+  if (!anchor || anchor.kind !== 'scripture' || anchor.book !== ref.book) return false;
+  const at = (c, v) => c * 1000 + v;
+  return at(anchor.chapterStart, anchor.verseStart) <= at(ref.chapterEnd, ref.verseEnd) && at(ref.chapterStart, ref.verseStart) <= at(anchor.chapterEnd, anchor.verseEnd);
+}
+/** Every saved entry anchored to a passage, oldest first: the app's passage-history order. */
+export function entriesAnchoredTo(entries, ref) {
+  return entries.filter((entry) => (entry.anchors || []).some((anchor) => anchorOverlaps(anchor, ref))).sort((a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt));
+}
