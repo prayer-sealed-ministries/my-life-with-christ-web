@@ -52,6 +52,19 @@ Added 8 November 2026. Source and jsdom tests cover these (`tests/sermon-editor.
 - [ ] Readable copy: the main Scripture, link and reference notes appear with My notes; reflection and prayer still need their own choice.
 - [ ] 320 CSS px width and 200% text: reference rows, the paste panel and the provided-notes actions wrap without horizontal scrolling. Screen reader: the two `h2` headings inside the form (“Provided notes…” and “Reference notes”) read in order after the page heading.
 
+## The Bible, browsed
+
+Added 10 November 2026. Covered by `tests/bible.test.mjs` and `tests/scripture-data.test.mjs` in jsdom, and by the rendered-browser harness in headless Chromium. Not yet seen by a person in a real browser or on a device.
+
+- [ ] The Bible page lists 66 books in two testaments with chapter and passage counts; “1 sam” leaves 1 Samuel; the count line is announced when it changes.
+- [ ] A book page shows its introduction where the app has one (Ruth has one; Genesis deliberately does not), the topics in the book, and every passage with its heading and reference. Each row is one tap.
+- [ ] A passage page shows the heading, the reference, the King James verses with numbers starting at the reference, topics touching the passage, your entries on it, and Previous / All of the book / Next.
+- [ ] “Write about this passage” opens a new entry filed under the passage with Main Scripture already filled; saving lists the entry on the passage page and the book page shows the count.
+- [ ] A stale passage link (`#bible/ruth/ruth-1-3-4`) offers the passage that contains it instead of a dead end.
+- [ ] On a saved entry, the passage chip opens the passage page; in the app the same entry shows the same passage anchor with no import warning.
+- [ ] 320 CSS px and 200% text: passage rows, the verse text and the Previous/Next bar wrap without horizontal scrolling. Screen reader: book rows read as “Name, N chapters, N passages”.
+- [ ] The Berean Standard Bible attribution is visible on the Bible, book and passage pages and on Storage & backups.
+
 ## Topics and the King James text
 
 Added 9 November 2026. Source and jsdom tests cover these (`tests/topics.test.mjs`, `tests/scripture-data.test.mjs`), and the rendered-browser harness proves the text loads under the Content Security Policy in headless Chromium. Nothing below has been seen by a person in a real browser or on a device.

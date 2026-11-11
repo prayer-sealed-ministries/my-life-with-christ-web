@@ -186,7 +186,7 @@ test('route DOM has a language, title, main landmark, named navigation, ordered 
   assert.ok(declaredName(node('nav')));
   assert.ok(node('header'));
   assert.ok(node('footer'));
-  for (const route of ['home', 'journal', 'topics', 'topic/marriage', 'topic/fictional-missing', 'write/topic/marriage', 'transfer', 'import', 'church', 'guide', 'privacy', 'format', ...['sermon', 'reading', 'prayer', 'reflection', 'letter'].map(kind => 'write/' + kind), 'write/draft/' + draft.id, 'write/edit/' + entry.id, 'entry/' + entry.id, 'entry/fictional-missing-entry']) {
+  for (const route of ['home', 'journal', 'bible', 'bible/ruth', 'bible/ruth/ruth-1-1-5', 'bible/ruth/ruth-1-3-4', 'bible/fictional-missing', 'write/passage/ruth/ruth-1-1-5', 'topics', 'topic/marriage', 'topic/fictional-missing', 'write/topic/marriage', 'transfer', 'import', 'church', 'guide', 'privacy', 'format', ...['sermon', 'reading', 'prayer', 'reflection', 'letter'].map(kind => 'write/' + kind), 'write/draft/' + draft.id, 'write/edit/' + entry.id, 'entry/' + entry.id, 'entry/fictional-missing-entry']) {
     await go('#' + route);
     assert.equal(document.querySelectorAll('main h1').length, 1, route);
     assert.match(document.title, /.+ · My Life With Christ/, route);

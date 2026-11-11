@@ -8,6 +8,9 @@
  *   - the King James text, one module per book, loaded on demand
  *   - the verse counts per chapter and the 66-book canon
  *   - the 40 life topics and the 344 passages they point at
+ *   - the Berean Standard Bible section headings (public domain since
+ *     2023-04-30) that divide every book into titled passages, and the book
+ *     introductions written for the app
  *
  * Each becomes an ES module (`export default …`) rather than a JSON file. The
  * companion's Content Security Policy says `connect-src 'none'`, which keeps
@@ -101,6 +104,39 @@ async function main() {
     'The life topics and the passages they point at, written for this project.',
   );
 
+  // The divisions: every book broken into titled passages. Shipped verbatim,
+  // including the source wording of each title beside its display wording —
+  // the app never silently corrects its source, and neither does a copy of it.
+  const sections = JSON.parse(await readFile(join(NATIVE, 'src/data/sections.json'), 'utf8'));
+  if (!Array.isArray(sections) || sections.length !== 66) throw new Error('sections.json is not 66 books');
+  const headings = sections.reduce((n, book) => n + book.entries.length, 0);
+  await record(
+    'src/data/sections.json',
+    'dist/sections.js',
+    asModule('Berean Standard Bible section headings, with the verse span each one covers. Public domain since 30 April 2023; see bsb/SOURCE.md. Loaded on demand when the Bible is browsed.', sections),
+    'The BSB section headings that divide every book into titled passages.',
+  );
+
+  // The introductions, keyed by book id. Only the prose crosses: the README
+  // and provenance notes in the app's file describe its own process and stay
+  // there, where they are read beside the source they describe.
+  const introsFile = JSON.parse(await readFile(join(NATIVE, 'src/data/intros.json'), 'utf8'));
+  const intros = Object.fromEntries(Object.entries(introsFile).filter(([key, value]) => !key.startsWith('_') && typeof value === 'string'));
+  await record(
+    'src/data/intros.json',
+    'dist/intros.js',
+    asModule('Book introductions written for My Life With Christ, keyed by book id. Drawn from plain historical fact and public-domain reference works; provenance is recorded beside the app\'s src/data/intros.json. Loaded on demand when the Bible is browsed.', intros),
+    'The book introductions written for the app, keyed by book id.',
+  );
+
+  const bsb = await readFile(join(NATIVE, 'src/data/sections/SOURCE.md'), 'utf8');
+  await record(
+    'src/data/sections/SOURCE.md',
+    'dist/bsb/SOURCE.md',
+    `<!-- Copied from the app's src/data/sections/SOURCE.md by ${GENERATOR}. The companion serves the same headings as dist/sections.js. -->\n\n${bsb}`,
+    'BSB section-heading provenance and licence, kept beside the headings.',
+  );
+
   const provenance = await readFile(join(NATIVE, 'src/data/kjv/SOURCE.md'), 'utf8');
   await record(
     'src/data/kjv/SOURCE.md',
@@ -118,7 +154,7 @@ async function main() {
   if (!manifest.notes.includes(note)) manifest.notes.push(note);
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
-  console.log(`Synced ${files.length} data files from ${NATIVE} at ${nativeSha.slice(0, 8)}: ${books.length} books, ${verses.toLocaleString()} verses, ${topicsFile.topics.length} topics.`);
+  console.log(`Synced ${files.length} data files from ${NATIVE} at ${nativeSha.slice(0, 8)}: ${books.length} books, ${verses.toLocaleString()} verses, ${headings.toLocaleString()} section headings, ${Object.keys(intros).length} introductions, ${topicsFile.topics.length} topics.`);
 }
 
 main().catch((error) => {
