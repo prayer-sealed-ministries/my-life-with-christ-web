@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {stripTypeScriptTypes} from 'node:module';
 import {
- books,versification,topics,topicsById,refToString,passageLength,loadBook,loadPassage,
+ books,versification,topics,topicsById,refToString,passageLength,loadBook,loadPassage,buildIndex,referenceSpan,
  searchTopics,normalize,topicIdsOf,withTopics,anchorLabel,topicSearchText,KJV_ATTRIBUTION,
 } from '../dist/scripture.js';
 import {newEntry,makeJourney,entryDraft,draftEntry} from '../dist/core.js';
@@ -122,4 +122,45 @@ test('topic anchors are the app’s own field: they cross its importer with no w
  assert.equal(anchorLabel(unknown.anchors[0]),'Topic: a-topic-the-app-may-add-later');
  assert.deepEqual(draftEntry(entryDraft(unknown)).anchors,unknown.anchors);
  assert.match(KJV_ATTRIBUTION,/King James Version/);
+});
+
+test('the divisions cover every verse exactly once, keep the source wording of every heading, and carry the introductions the app has',async()=>{
+ const {loadSections,buildSegments,segmentRef,segmentTitle,topicsForSpan,topicsForBook,anchorOverlaps,entriesAnchoredTo,BSB_ATTRIBUTION}=await import('../dist/scripture.js');
+ const sections=await loadSections();
+ assert.equal(sections.outlineBooks.length,66);
+ let headings=0,verses=0,segments=0;
+ for(const book of books){
+  const outline=sections.outlineBooksById.get(book.id);assert.ok(outline,book.id);
+  headings+=outline.entries.length;
+  for(const entry of outline.entries){
+   assert.equal(entry.book,book.id);
+   assert.ok(passageLength(entry)>0,`${entry.id} does not resolve to verses`);
+   assert.equal(entry.displayTitle,entry.title,`${entry.id}: the source wording is the shown wording`);
+  }
+  const list=sections.segmentsForBook(book.id);segments+=list.length;
+  // Gapless and in order: each segment starts the verse after the previous one ended.
+  const index=buildIndex(versification[book.id]);let cursor=1;
+  for(const segment of list){const span=referenceSpan(index,segmentRef(segment,book.id));assert.ok(span,`${segment.id} resolves`);assert.equal(span.start,cursor,`${segment.id} starts where the previous segment ended`);cursor=span.end+1;verses+=span.end-span.start+1;}
+  assert.equal(cursor,index.total+1,`${book.id} ends at its last verse`);
+ }
+ assert.equal(headings,3016);assert.equal(segments,3016,'every passage has a heading; nothing is left untitled');assert.equal(verses,31102);
+ // Introductions: 55 books have one; eleven are deliberately without, as the app's provenance records.
+ const withIntro=books.filter(b=>sections.introFor(b.id)).length;assert.equal(withIntro,55);
+ for(const id of ['genesis','matthew','mark','luke','john','acts','romans','1-corinthians','song-of-solomon','psalms','isaiah'])assert.equal(sections.introFor(id),'',`${id} is reserved for the owner and must have no introduction`);
+ assert.match(sections.introFor('ruth'),/^Ruth is four chapters long/);
+ // Titles, lookups and the stale-id fallback.
+ const ruth=sections.segmentsForBook('ruth');assert.equal(segmentTitle(ruth[0]),'Naomi Becomes a Widow');assert.equal(ruth[0].ref,'Ruth 1:1-5');
+ assert.equal(sections.findSegment('ruth','ruth-1-1-5'),ruth[0]);assert.equal(sections.segmentContaining('ruth',1,3),ruth[0]);
+ assert.equal(sections.nearestTo('ruth','ruth-1-3-4'),ruth[0]);assert.equal(sections.nearestTo('ruth','not-an-id'),undefined);assert.equal(sections.nearestTo('ruth','ruth-99'),undefined);
+ // An untitled span, if the headings ever leave one, is named by its reference and keeps a stable id.
+ const sparse=buildSegments({id:'ruth',name:'Ruth',entries:[ruth[1].entry]},versification.ruth);assert.equal(sparse[0].kind,'uncovered');assert.equal(sparse[0].id,'ruth-1-1-5');assert.equal(segmentTitle(sparse[0]),'Ruth 1:1-5');assert.equal(sparse[1].kind,'outline');
+ // The reverse index and the overlap rule the passage pages share.
+ assert.deepEqual(topicsForSpan('psalms',23,1,23,6).map(t=>t.topic.id).slice(0,3),['fear','grief','rest']);
+ assert.deepEqual(topicsForBook('ruth').map(t=>[t.topic.id,t.passages]),[['friendship',1]]);
+ assert.equal(topicsForSpan('nothing',1,1,1,1).length,0);
+ const inside={kind:'scripture',book:'ruth',chapterStart:1,verseStart:3,chapterEnd:1,verseEnd:3},ref=segmentRef(ruth[0],'ruth');
+ assert.equal(anchorOverlaps(inside,ref),true);assert.equal(anchorOverlaps({...inside,chapterStart:2,chapterEnd:2},ref),false);assert.equal(anchorOverlaps({kind:'topic',topicId:'grief'},ref),false);
+ const a=newEntry();a.date='2026-01-02';a.anchors=[inside];const b=newEntry();b.date='2026-01-01';b.anchors=[{kind:'scripture',book:'ruth',chapterStart:1,verseStart:1,chapterEnd:2,verseEnd:1}];const c=newEntry();c.anchors=[{kind:'scripture',book:'ruth',chapterStart:3,verseStart:1,chapterEnd:3,verseEnd:1}];
+ assert.deepEqual(entriesAnchoredTo([a,b,c],ref).map(e=>e.date),['2026-01-01','2026-01-02'],'oldest first, and only the ones that overlap');
+ assert.match(BSB_ATTRIBUTION,/Berean Standard Bible/);
 });

@@ -613,6 +613,30 @@
       "sha256": "75e29e2cd7870513ac7c0100656eab425751209311acaa472af61b4b018cf348"
     },
     {
+      "companionPath": "dist/sections.js",
+      "nativePath": "src/data/sections.json",
+      "kind": "generated",
+      "why": "The BSB section headings that divide every book into titled passages.",
+      "sourceSha256": "086b309f958ffa293a98a8d8a5a01d2fbebb833817f788c17b4066814620bc5c",
+      "sha256": "4372e248fabd5783b1c7eaf361da57963dbe6e3303f845ecf901397a99d0c2a4"
+    },
+    {
+      "companionPath": "dist/intros.js",
+      "nativePath": "src/data/intros.json",
+      "kind": "generated",
+      "why": "The book introductions written for the app, keyed by book id.",
+      "sourceSha256": "af62a67294c5ee408da9a73f7b3d663ed22d0336069635d596a56cef03e8d4e0",
+      "sha256": "65493dcb6536b80960e57c442110a4e7da01041c2403397bfccf00d96da8be07"
+    },
+    {
+      "companionPath": "dist/bsb/SOURCE.md",
+      "nativePath": "src/data/sections/SOURCE.md",
+      "kind": "generated",
+      "why": "BSB section-heading provenance and licence, kept beside the headings.",
+      "sourceSha256": "f54b1b781edb76685004739cb3fcd7304b1ab93965527bf41c0ce21fee2e24e5",
+      "sha256": "963bfd8f07c732201886345e8ed79a2617379af0dcbf8f6623fed7f248ab960d"
+    },
+    {
       "companionPath": "dist/kjv/SOURCE.md",
       "nativePath": "src/data/kjv/SOURCE.md",
       "kind": "generated",
@@ -622,5 +646,5 @@
     }
   ],
   "dataSourceSha": "33e0204675e69bf06a78095934631ebd503a8392",
-  "dataSyncedOn": "2026-11-09"
+  "dataSyncedOn": "2026-11-11"
 }
